@@ -1,0 +1,2 @@
+include ':play_android'
+rootProject.name='PlayAndroid'
