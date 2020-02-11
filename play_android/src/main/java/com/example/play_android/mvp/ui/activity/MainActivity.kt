@@ -11,8 +11,9 @@ import com.example.play_android.di.component.DaggerMainComponent
 import com.example.play_android.di.module.MainModule
 import com.example.play_android.mvp.contract.MainContract
 import com.example.play_android.mvp.presenter.MainPresenter
-
 import com.example.play_android.R
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.main_content.*
 
 
 /**
@@ -26,19 +27,6 @@ import com.example.play_android.R
  * <a href="https://github.com/JessYanCoding/MVPArms/wiki">See me</a>
  * <a href="https://github.com/JessYanCoding/MVPArmsTemplate">模版请保持更新</a>
  * ================================================
- */
-/**
- * 如果没presenter
- * 你可以这样写
- *
- * @ActivityScope(請注意命名空間) class NullObjectPresenterByActivity
- * @Inject constructor() : IPresenter {
- * override fun onStart() {
- * }
- *
- * override fun onDestroy() {
- * }
- * }
  */
 class MainActivity : BaseActivity<MainPresenter>(), MainContract.View {
 
@@ -58,7 +46,10 @@ class MainActivity : BaseActivity<MainPresenter>(), MainContract.View {
 
 
     override fun initData(savedInstanceState: Bundle?) {
-
+        bottomNav.run {
+            enableAnimation(false)
+            enableShiftingMode(false)
+        }
     }
 
 
