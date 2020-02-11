@@ -12,7 +12,6 @@ import com.example.play_android.di.module.MainModule
 import com.example.play_android.mvp.contract.MainContract
 import com.example.play_android.mvp.presenter.MainPresenter
 import com.example.play_android.R
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.main_content.*
 
 
