@@ -16,7 +16,7 @@
         android:title="@string/home_public" />
 
     <item
-        android:id="@+id/nav_setup"
+        android:id="@+id/nav_system"
         android:icon="@drawable/ic_system"
         android:title="@string/home_system" />
 

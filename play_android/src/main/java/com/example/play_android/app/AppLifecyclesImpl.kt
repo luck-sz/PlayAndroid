@@ -12,6 +12,7 @@ import com.squareup.leakcanary.RefWatcher
 import butterknife.ButterKnife
 
 import com.example.play_android.BuildConfig
+import me.yokeyword.fragmentation.Fragmentation
 
 import timber.log.Timber
 
@@ -47,6 +48,13 @@ class AppLifecyclesImpl : AppLifecycles {
                 IntelligentCache.getKeyOfKeep(RefWatcher::class.java.name),
                 if (BuildConfig.USE_CANARY) LeakCanary.install(application) else RefWatcher.DISABLED
             )
+        // 初始化Fragment管理
+        Fragmentation.builder()
+            // 显示悬浮球 ; 其他Mode:SHAKE: 摇一摇唤出   NONE：隐藏
+            .stackViewMode(Fragmentation.NONE)
+            .debug(BuildConfig.DEBUG)
+            .install()
+
     }
 
     override fun onTerminate(application: Application) {

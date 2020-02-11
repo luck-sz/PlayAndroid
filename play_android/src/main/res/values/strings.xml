@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">玩安卓</string>
 
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
     <!--Home-->
     <string name="home_main">首页</string>
     <string name="home_square">广场</string>
@@ -63,4 +66,20 @@
 
     <string name="nav_line_4" translatable="false">----</string>
     <string name="nav_line_2" translatable="false">--</string>
+
+    <string name="exit_tip">再按一次退出程序</string>
+    <string name="share_article_url">%1$s分享【%2$s】：%3$s</string>
+    <string name="confirm">确定</string>
+    <string name="cancel">取消</string>
+    <string name="no_data">暂无数据</string>
+    <string name="no_network">网络异常</string>
+    <string name="no_network_tip">请检查网络后点击重新加载</string>
+    <string name="data_error">数据获取失败</string>
+    <string name="network_unavailable_tip">网络连接不可用,请检查网络设置!</string>
+
+    <!-- Menu Action -->
+    <string name="action_search">搜索</string>
+    <string name="action_share">分享</string>
+    <string name="action_like">收藏</string>
+    <string name="action_browser">用浏览器打开</string>
 </resources>

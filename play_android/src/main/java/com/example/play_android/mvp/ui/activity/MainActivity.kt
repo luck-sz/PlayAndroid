@@ -1,7 +1,13 @@
 package com.example.play_android.mvp.ui.activity
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.app.ActionBarDrawerToggle
+import android.view.KeyEvent
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
 
 import com.jess.arms.base.BaseActivity
 import com.jess.arms.di.component.AppComponent
@@ -12,22 +18,24 @@ import com.example.play_android.di.module.MainModule
 import com.example.play_android.mvp.contract.MainContract
 import com.example.play_android.mvp.presenter.MainPresenter
 import com.example.play_android.R
+import com.example.play_android.app.base.MySupportActivity
+import com.example.play_android.mvp.ui.fragment.*
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.include_title.*
 import kotlinx.android.synthetic.main.main_content.*
+import me.yokeyword.fragmentation.SupportFragment
 
 
-/**
- * ================================================
- * Description:
- * <p>
- * Created by MVPArmsTemplate on 02/11/2020 13:53
- * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
- * <a href="https://github.com/JessYanCoding">Follow me</a>
- * <a href="https://github.com/JessYanCoding/MVPArms">Star me</a>
- * <a href="https://github.com/JessYanCoding/MVPArms/wiki">See me</a>
- * <a href="https://github.com/JessYanCoding/MVPArmsTemplate">模版请保持更新</a>
- * ================================================
- */
-class MainActivity : BaseActivity<MainPresenter>(), MainContract.View {
+// 扩展方法
+fun Context.showToast(msg: String) {
+    Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+}
+
+class MainActivity : MySupportActivity<MainPresenter>(), MainContract.View {
+
+    // 存放切换页的Fragment数组
+    private val mFragments = arrayOfNulls<SupportFragment>(5)
+    private var mExitTime: Long = 0
 
     override fun setupActivityComponent(appComponent: AppComponent) {
         DaggerMainComponent //如找不到该类,请编译一下项目
@@ -45,10 +53,10 @@ class MainActivity : BaseActivity<MainPresenter>(), MainContract.View {
 
 
     override fun initData(savedInstanceState: Bundle?) {
-        bottomNav.run {
-            enableAnimation(false)
-            enableShiftingMode(false)
-        }
+        initFragment()
+        initToolbar()
+        initDrawerLayout()
+        initBottomNav()
     }
 
 
@@ -70,5 +78,107 @@ class MainActivity : BaseActivity<MainPresenter>(), MainContract.View {
 
     override fun killMyself() {
         finish()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_activity_main, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.action_search -> {
+                showToast("搜索...")
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    /**
+     * 连续点击退出App
+     */
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (System.currentTimeMillis().minus(mExitTime) <= 2000) {
+                finish()
+            } else {
+                mExitTime = System.currentTimeMillis()
+                showToast(getString(R.string.exit_tip))
+            }
+            return true
+        }
+        return super.onKeyDown(keyCode, event)
+    }
+
+    /**
+     * init DrawerLayout
+     */
+    private fun initDrawerLayout() {
+        drawer_layout.run {
+            val toggle = ActionBarDrawerToggle(
+                this@MainActivity,
+                this,
+                toolbar
+                , R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close
+            )
+            addDrawerListener(toggle)
+            toggle.syncState()
+        }
+    }
+
+    /**
+     * 初始化fragment
+     */
+    private fun initFragment() {
+        val homeFragment = findFragment(HomeFragment::class.java)
+        if (homeFragment == null) {
+            mFragments[0] = HomeFragment.newInstance()//主页
+            mFragments[1] = SquareFragment.newInstance()//广场
+            mFragments[2] = PublicFragment.newInstance()//公众号
+            mFragments[3] = SystemFragment.newInstance()//体系
+            mFragments[4] = ProjectFragment.newInstance()//我的
+            loadMultipleRootFragment(
+                R.id.frame_content, 0, mFragments[0]
+                , mFragments[1], mFragments[2], mFragments[3], mFragments[4]
+            )
+        } else {
+            mFragments[0] = homeFragment
+            mFragments[1] = findFragment(SquareFragment::class.java)
+            mFragments[2] = findFragment(PublicFragment::class.java)
+            mFragments[3] = findFragment(SystemFragment::class.java)
+            mFragments[4] = findFragment(ProjectFragment::class.java)
+        }
+    }
+
+    /**
+     * 初始化toolbar
+     */
+    private fun initToolbar() {
+        toolbar.run {
+            title = getString(R.string.app_name)
+            setSupportActionBar(this)
+        }
+    }
+
+    /**
+     * 初始化底部切换导航栏
+     */
+    private fun initBottomNav() {
+        bottomNav.run {
+            enableAnimation(false)
+            enableShiftingMode(false)
+            setOnNavigationItemSelectedListener {
+                when (it.itemId) {
+                    R.id.nav_main -> showHideFragment(mFragments[0])
+                    R.id.nav_square -> showHideFragment(mFragments[1])
+                    R.id.nav_public -> showHideFragment(mFragments[2])
+                    R.id.nav_system -> showHideFragment(mFragments[3])
+                    R.id.nav_project -> showHideFragment(mFragments[4])
+                }
+                true
+            }
+        }
     }
 }

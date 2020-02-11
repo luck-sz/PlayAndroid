@@ -7,7 +7,7 @@
 
     <TextView
         android:gravity="center"
-        android:text="@string/home_main"
+        android:text="@string/home_system"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

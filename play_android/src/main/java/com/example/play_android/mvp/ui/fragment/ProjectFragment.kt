@@ -12,10 +12,10 @@ import com.jess.arms.base.BaseFragment
 import com.jess.arms.di.component.AppComponent
 import com.jess.arms.utils.ArmsUtils
 
-import com.example.play_android.di.component.DaggerHomeComponent
-import com.example.play_android.di.module.HomeModule
-import com.example.play_android.mvp.contract.HomeContract
-import com.example.play_android.mvp.presenter.HomePresenter
+import com.example.play_android.di.component.DaggerProjectComponent
+import com.example.play_android.di.module.ProjectModule
+import com.example.play_android.mvp.contract.ProjectContract
+import com.example.play_android.mvp.presenter.ProjectPresenter
 
 import com.example.play_android.R
 import com.example.play_android.app.base.MySupportFragment
@@ -25,7 +25,7 @@ import com.example.play_android.app.base.MySupportFragment
  * ================================================
  * Description:
  * <p>
- * Created by MVPArmsTemplate on 02/11/2020 14:05
+ * Created by MVPArmsTemplate on 02/11/2020 20:47
  * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
  * <a href="https://github.com/JessYanCoding">Follow me</a>
  * <a href="https://github.com/JessYanCoding/MVPArms">Star me</a>
@@ -46,20 +46,20 @@ import com.example.play_android.app.base.MySupportFragment
  * }
  * }
  */
-class HomeFragment : MySupportFragment<HomePresenter>(), HomeContract.View {
+class ProjectFragment : MySupportFragment<ProjectPresenter>(), ProjectContract.View {
     companion object {
-        fun newInstance(): HomeFragment {
-            val fragment = HomeFragment()
+        fun newInstance(): ProjectFragment {
+            val fragment = ProjectFragment()
             return fragment
         }
     }
 
 
     override fun setupFragmentComponent(appComponent: AppComponent) {
-        DaggerHomeComponent //如找不到该类,请编译一下项目
+        DaggerProjectComponent //如找不到该类,请编译一下项目
             .builder()
             .appComponent(appComponent)
-            .homeModule(HomeModule(this))
+            .projectModule(ProjectModule(this))
             .build()
             .inject(this)
     }
@@ -69,7 +69,7 @@ class HomeFragment : MySupportFragment<HomePresenter>(), HomeContract.View {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        return inflater.inflate(R.layout.fragment_project, container, false);
     }
 
     override fun initData(savedInstanceState: Bundle?) {
