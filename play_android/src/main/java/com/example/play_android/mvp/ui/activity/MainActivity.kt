@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.ActionBarDrawerToggle
+import android.view.Gravity
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
@@ -25,7 +26,6 @@ import kotlinx.android.synthetic.main.include_title.*
 import kotlinx.android.synthetic.main.main_content.*
 import me.yokeyword.fragmentation.SupportFragment
 
-
 // 扩展方法
 fun Context.showToast(msg: String) {
     Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
@@ -35,6 +35,7 @@ class MainActivity : MySupportActivity<MainPresenter>(), MainContract.View {
 
     // 存放切换页的Fragment数组
     private val mFragments = arrayOfNulls<SupportFragment>(5)
+    private val mTitle = arrayOf("首页", "广场", "公众号", "体系", "项目")
     private var mExitTime: Long = 0
 
     override fun setupActivityComponent(appComponent: AppComponent) {
@@ -46,16 +47,14 @@ class MainActivity : MySupportActivity<MainPresenter>(), MainContract.View {
             .inject(this)
     }
 
-
     override fun initView(savedInstanceState: Bundle?): Int {
         return R.layout.activity_main //如果你不需要框架帮你设置 setContentView(id) 需要自行设置,请返回 0
     }
 
-
     override fun initData(savedInstanceState: Bundle?) {
         initFragment()
-        initToolbar()
         initDrawerLayout()
+        initToolbar()
         initBottomNav()
     }
 
@@ -157,8 +156,11 @@ class MainActivity : MySupportActivity<MainPresenter>(), MainContract.View {
      */
     private fun initToolbar() {
         toolbar.run {
-            title = getString(R.string.app_name)
             setSupportActionBar(this)
+            title = mTitle[0]
+            setNavigationOnClickListener {
+                drawer_layout.openDrawer(Gravity.START)
+            }
         }
     }
 
@@ -167,15 +169,31 @@ class MainActivity : MySupportActivity<MainPresenter>(), MainContract.View {
      */
     private fun initBottomNav() {
         bottomNav.run {
+            currentItem = 0
             enableAnimation(false)
             enableShiftingMode(false)
             setOnNavigationItemSelectedListener {
                 when (it.itemId) {
-                    R.id.nav_main -> showHideFragment(mFragments[0])
-                    R.id.nav_square -> showHideFragment(mFragments[1])
-                    R.id.nav_public -> showHideFragment(mFragments[2])
-                    R.id.nav_system -> showHideFragment(mFragments[3])
-                    R.id.nav_project -> showHideFragment(mFragments[4])
+                    R.id.nav_main -> {
+                        showHideFragment(mFragments[0])
+                        toolbar.title = mTitle[0]
+                    }
+                    R.id.nav_square -> {
+                        showHideFragment(mFragments[1])
+                        toolbar.title = mTitle[1]
+                    }
+                    R.id.nav_public -> {
+                        showHideFragment(mFragments[2])
+                        toolbar.title = mTitle[2]
+                    }
+                    R.id.nav_system -> {
+                        showHideFragment(mFragments[3])
+                        toolbar.title = mTitle[3]
+                    }
+                    R.id.nav_project -> {
+                        showHideFragment(mFragments[4])
+                        toolbar.title = mTitle[4]
+                    }
                 }
                 true
             }
