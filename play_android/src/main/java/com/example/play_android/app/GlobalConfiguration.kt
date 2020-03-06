@@ -16,7 +16,7 @@ import com.squareup.leakcanary.RefWatcher
 import java.util.concurrent.TimeUnit
 
 import com.example.play_android.BuildConfig
-import com.example.play_android.mvp.model.api.Api
+import com.example.play_android.app.api.Api
 
 /**
  * ================================================
@@ -47,7 +47,7 @@ class GlobalConfiguration : ConfigModule {
             builder.printHttpLogLevel(RequestInterceptor.Level.NONE)
         }
 
-        builder.baseurl(Api.APP_DOMAIN)
+        builder.baseurl(Api.BASE_URL)
             //强烈建议自己自定义图片加载逻辑, 因为 arms-imageloader-glide 提供的 GlideImageLoaderStrategy 并不能满足复杂的需求
             //请参考 https://github.com/JessYanCoding/MVPArms/wiki#3.4
             .imageLoaderStrategy(GlideImageLoaderStrategy())

@@ -22,7 +22,6 @@ import com.example.play_android.R
 import com.example.play_android.app.base.MySupportActivity
 import com.example.play_android.mvp.ui.fragment.*
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.include_title.*
 import kotlinx.android.synthetic.main.main_content.*
 import me.yokeyword.fragmentation.SupportFragment
 

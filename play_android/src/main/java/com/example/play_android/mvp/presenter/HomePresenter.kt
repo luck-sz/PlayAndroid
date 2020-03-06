@@ -1,6 +1,12 @@
 package com.example.play_android.mvp.presenter
 
 import android.app.Application
+import android.widget.Toast
+import com.example.play_android.R
+import com.example.play_android.app.api.entity.ApiPagerResponse
+import com.example.play_android.app.api.entity.ApiResponse
+import com.example.play_android.app.api.entity.ArticleResponse
+import com.example.play_android.app.api.entity.BannerResponse
 
 import com.jess.arms.integration.AppManager
 import com.jess.arms.di.scope.ActivityScope
@@ -10,6 +16,13 @@ import me.jessyan.rxerrorhandler.core.RxErrorHandler
 import javax.inject.Inject
 
 import com.example.play_android.mvp.contract.HomeContract
+import com.example.play_android.mvp.ui.adapter.HomeAdapter
+import com.jess.arms.utils.RxLifecycleUtils
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber
+import timber.log.Timber
+import java.util.*
 
 
 /**
@@ -38,8 +51,45 @@ constructor(model: HomeContract.Model, rootView: HomeContract.View) :
     @Inject
     lateinit var mAppManager: AppManager
 
+    lateinit var homeAdapter: HomeAdapter
+
+    fun initBanner() {
+        mModel.getBanner()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+            .subscribe(object :
+                ErrorHandleSubscriber<ApiResponse<List<BannerResponse>>>(mErrorHandler) {
+                override fun onNext(response: ApiResponse<List<BannerResponse>>) {
+                    mRootView.setBanner(response.data)
+                }
+
+                override fun onError(t: Throwable) {
+                }
+            })
+
+    }
+
+    fun initAdapter() {
+        mModel.getTopArticle()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+            .subscribe(object :
+                ErrorHandleSubscriber<ApiResponse<List<ArticleResponse>>>(mErrorHandler) {
+                override fun onNext(response: ApiResponse<List<ArticleResponse>>) {
+//                    Timber.i(response.data.size.toString())
+                    homeAdapter = HomeAdapter(R.layout.item_home, response.data)
+                    mRootView.setContent(homeAdapter)
+                }
+
+                override fun onError(t: Throwable) {
+
+                }
+            })
+    }
 
     override fun onDestroy() {
-        super.onDestroy();
+        super.onDestroy()
     }
 }

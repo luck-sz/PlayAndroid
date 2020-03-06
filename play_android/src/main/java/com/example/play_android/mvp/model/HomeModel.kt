@@ -1,6 +1,11 @@
 package com.example.play_android.mvp.model
 
 import android.app.Application
+import com.example.play_android.app.api.entity.ApiPagerResponse
+import com.example.play_android.app.api.entity.ApiResponse
+import com.example.play_android.app.api.entity.ArticleResponse
+import com.example.play_android.app.api.entity.BannerResponse
+import com.example.play_android.app.api.service.ApiService
 import com.google.gson.Gson
 import com.jess.arms.integration.IRepositoryManager
 import com.jess.arms.mvp.BaseModel
@@ -9,6 +14,7 @@ import com.jess.arms.di.scope.ActivityScope
 import javax.inject.Inject
 
 import com.example.play_android.mvp.contract.HomeContract
+import io.reactivex.Observable
 
 
 /**
@@ -28,12 +34,23 @@ class HomeModel
 @Inject
 constructor(repositoryManager: IRepositoryManager) : BaseModel(repositoryManager),
     HomeContract.Model {
+
     @Inject
-    lateinit var mGson: Gson;
+    lateinit var mGson: Gson
     @Inject
-    lateinit var mApplication: Application;
+    lateinit var mApplication: Application
+
+    override fun getBanner(): Observable<ApiResponse<List<BannerResponse>>> {
+        return mRepositoryManager.obtainRetrofitService(ApiService::class.java)
+            .getBanner()
+    }
+
+    override fun getTopArticle(): Observable<ApiResponse<List<ArticleResponse>>> {
+        return mRepositoryManager.obtainRetrofitService(ApiService::class.java)
+            .getTopArticleList()
+    }
 
     override fun onDestroy() {
-        super.onDestroy();
+        super.onDestroy()
     }
 }

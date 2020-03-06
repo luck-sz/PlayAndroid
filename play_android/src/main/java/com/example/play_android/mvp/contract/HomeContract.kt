@@ -1,7 +1,13 @@
 package com.example.play_android.mvp.contract
 
+import com.example.play_android.app.api.entity.ApiPagerResponse
+import com.example.play_android.app.api.entity.ApiResponse
+import com.example.play_android.app.api.entity.ArticleResponse
+import com.example.play_android.app.api.entity.BannerResponse
+import com.example.play_android.mvp.ui.adapter.HomeAdapter
 import com.jess.arms.mvp.IView
 import com.jess.arms.mvp.IModel
+import io.reactivex.Observable
 
 
 /**
@@ -18,9 +24,22 @@ import com.jess.arms.mvp.IModel
  */
 interface HomeContract {
     //对于经常使用的关于UI的方法可以定义到IView中,如显示隐藏进度条,和显示文字消息
-    interface View : IView
+    interface View : IView {
+        // 设置Banner
+        fun setBanner(banner: List<BannerResponse>)
+
+        // 添加Banner
+        fun addBanner()
+
+        // 设置列表内容
+        fun setContent(homeAdapter: HomeAdapter)
+    }
 
     //Model层定义接口,外部只需关心Model返回的数据,无需关心内部细节,即是否使用缓存
-    interface Model : IModel
+    interface Model : IModel {
+        fun getBanner(): Observable<ApiResponse<List<BannerResponse>>>
+
+        fun getTopArticle() : Observable<ApiResponse<List<ArticleResponse>>>
+    }
 
 }
