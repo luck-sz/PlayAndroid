@@ -39,10 +39,12 @@ interface HomeContract {
     interface Model : IModel {
         fun getBanner(): Observable<ApiResponse<List<BannerResponse>>>
 
-        fun getTopArticle(): Observable<ApiResponse<List<ArticleResponse>>>
+        fun getTopArticle(): Observable<ApiResponse<MutableList<ArticleResponse>>>
 
         fun getArticle(pageNo: Int): Observable<ApiResponse<ApiPagerResponse<MutableList<ArticleResponse>>>>
 
+        // 获取首页文章数据(包括置顶文章)
+        fun getHomePage(pageNo: Int): Observable<MutableList<ArticleResponse>>
     }
 
 }

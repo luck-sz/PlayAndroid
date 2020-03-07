@@ -1,6 +1,7 @@
 package com.example.play_android.mvp.model
 
 import android.app.Application
+import com.example.play_android.app.api.Api
 import com.example.play_android.app.api.entity.ApiPagerResponse
 import com.example.play_android.app.api.entity.ApiResponse
 import com.example.play_android.app.api.entity.ArticleResponse
@@ -15,6 +16,7 @@ import javax.inject.Inject
 
 import com.example.play_android.mvp.contract.HomeContract
 import io.reactivex.Observable
+import io.reactivex.functions.BiFunction
 
 
 /**
@@ -45,7 +47,7 @@ constructor(repositoryManager: IRepositoryManager) : BaseModel(repositoryManager
             .getBanner()
     }
 
-    override fun getTopArticle(): Observable<ApiResponse<List<ArticleResponse>>> {
+    override fun getTopArticle(): Observable<ApiResponse<MutableList<ArticleResponse>>> {
         return mRepositoryManager.obtainRetrofitService(ApiService::class.java)
             .getTopArticleList()
     }
@@ -53,6 +55,22 @@ constructor(repositoryManager: IRepositoryManager) : BaseModel(repositoryManager
     override fun getArticle(pageNo: Int): Observable<ApiResponse<ApiPagerResponse<MutableList<ArticleResponse>>>> {
         return mRepositoryManager.obtainRetrofitService(ApiService::class.java)
             .getArticleList(pageNo)
+    }
+
+    override fun getHomePage(pageNo: Int): Observable<MutableList<ArticleResponse>> {
+        val mTopArticle: Observable<MutableList<ArticleResponse>> =
+            mRepositoryManager.obtainRetrofitService(ApiService::class.java)
+                .getTopArticleList()
+                .map { it.data }
+        val mArticle: Observable<MutableList<ArticleResponse>> =
+            mRepositoryManager.obtainRetrofitService(ApiService::class.java)
+                .getArticleList(pageNo)
+                .map { it.data.datas }
+        // 合并数据
+        return Observable.zip(mTopArticle, mArticle, BiFunction { list1, list2 ->
+            list1.addAll(list2)
+            list1
+        })
     }
 
     override fun onDestroy() {

@@ -20,7 +20,7 @@ interface ApiService {
      * 获取置顶文章集合数据
      */
     @GET("/article/top/json")
-    fun getTopArticleList(): Observable<ApiResponse<List<ArticleResponse>>>
+    fun getTopArticleList(): Observable<ApiResponse<MutableList<ArticleResponse>>>
 
     /**
      * 获取首页文章数据

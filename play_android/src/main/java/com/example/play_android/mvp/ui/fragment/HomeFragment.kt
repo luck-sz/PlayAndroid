@@ -1,6 +1,5 @@
 package com.example.play_android.mvp.ui.fragment
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -57,8 +56,7 @@ class HomeFragment : MySupportFragment<HomePresenter>(), HomeContract.View {
     override fun initData(savedInstanceState: Bundle?) {
         initView()
         mPresenter?.initBanner()
-//        mPresenter?.initAdapter()
-        mPresenter?.initData(0)
+        mPresenter?.getHomePage(0)
     }
 
     override fun setData(data: Any?) {
@@ -126,8 +124,7 @@ class HomeFragment : MySupportFragment<HomePresenter>(), HomeContract.View {
         refresh_layout.run {
             setOnRefreshListener {
                 mPresenter?.initBanner()
-//                mPresenter?.initAdapter()
-                mPresenter?.initData(0)
+                mPresenter?.getHomePage(0)
             }
         }
     }
