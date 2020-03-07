@@ -50,6 +50,11 @@ constructor(repositoryManager: IRepositoryManager) : BaseModel(repositoryManager
             .getTopArticleList()
     }
 
+    override fun getArticle(pageNo: Int): Observable<ApiResponse<ApiPagerResponse<MutableList<ArticleResponse>>>> {
+        return mRepositoryManager.obtainRetrofitService(ApiService::class.java)
+            .getArticleList(pageNo)
+    }
+
     override fun onDestroy() {
         super.onDestroy()
     }

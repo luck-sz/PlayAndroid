@@ -29,7 +29,7 @@ interface HomeContract {
         fun setBanner(banner: List<BannerResponse>)
 
         // 添加Banner
-        fun addBanner()
+        fun addBanner(homeAdapter: HomeAdapter)
 
         // 设置列表内容
         fun setContent(homeAdapter: HomeAdapter)
@@ -39,7 +39,10 @@ interface HomeContract {
     interface Model : IModel {
         fun getBanner(): Observable<ApiResponse<List<BannerResponse>>>
 
-        fun getTopArticle() : Observable<ApiResponse<List<ArticleResponse>>>
+        fun getTopArticle(): Observable<ApiResponse<List<ArticleResponse>>>
+
+        fun getArticle(pageNo: Int): Observable<ApiResponse<ApiPagerResponse<MutableList<ArticleResponse>>>>
+
     }
 
 }

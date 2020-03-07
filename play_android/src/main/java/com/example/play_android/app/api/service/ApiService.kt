@@ -6,6 +6,7 @@ import com.example.play_android.app.api.entity.ArticleResponse
 import com.example.play_android.app.api.entity.BannerResponse
 import io.reactivex.Observable
 import retrofit2.http.GET
+import retrofit2.http.Path
 
 interface ApiService {
 
@@ -20,4 +21,10 @@ interface ApiService {
      */
     @GET("/article/top/json")
     fun getTopArticleList(): Observable<ApiResponse<List<ArticleResponse>>>
+
+    /**
+     * 获取首页文章数据
+     */
+    @GET("/article/list/{page}/json")
+    fun getArticleList(@Path("page") pageNo: Int): Observable<ApiResponse<ApiPagerResponse<MutableList<ArticleResponse>>>>
 }

@@ -1,15 +1,13 @@
 package com.example.play_android.mvp.ui.fragment
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.os.Message
-import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
-import com.jess.arms.base.BaseFragment
 import com.jess.arms.di.component.AppComponent
 import com.jess.arms.utils.ArmsUtils
 
@@ -22,9 +20,15 @@ import com.example.play_android.R
 import com.example.play_android.app.api.entity.BannerResponse
 import com.example.play_android.app.base.MySupportFragment
 import com.example.play_android.mvp.ui.adapter.HomeAdapter
+import com.example.play_android.mvp.ui.view.BannerViewHolder
+import com.zhouwei.mzbanner.MZBannerView
+import com.zhouwei.mzbanner.holder.MZHolderCreator
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : MySupportFragment<HomePresenter>(), HomeContract.View {
+
+    lateinit var mBannerView: View
+    private lateinit var mMyBanner: MZBannerView<BannerResponse>
 
     companion object {
         fun newInstance(): HomeFragment {
@@ -32,7 +36,6 @@ class HomeFragment : MySupportFragment<HomePresenter>(), HomeContract.View {
             return fragment
         }
     }
-
 
     override fun setupFragmentComponent(appComponent: AppComponent) {
         DaggerHomeComponent //如找不到该类,请编译一下项目
@@ -48,12 +51,14 @@ class HomeFragment : MySupportFragment<HomePresenter>(), HomeContract.View {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
     override fun initData(savedInstanceState: Bundle?) {
-//        mPresenter?.initBanner()
-        mPresenter?.initAdapter()
+        initView()
+        mPresenter?.initBanner()
+//        mPresenter?.initAdapter()
+        mPresenter?.initData(0)
     }
 
     override fun setData(data: Any?) {
@@ -61,11 +66,11 @@ class HomeFragment : MySupportFragment<HomePresenter>(), HomeContract.View {
     }
 
     override fun showLoading() {
-
+        refresh_layout.isRefreshing = true
     }
 
     override fun hideLoading() {
-
+        refresh_layout.isRefreshing = false
     }
 
     override fun showMessage(message: String) {
@@ -80,18 +85,50 @@ class HomeFragment : MySupportFragment<HomePresenter>(), HomeContract.View {
 
     }
 
-    override fun setBanner(banner: List<BannerResponse>) {
-
+    override fun onPause() {
+        super.onPause()
+        mMyBanner.pause()
     }
 
-    override fun addBanner() {
+    override fun onResume() {
+        super.onResume()
+        mMyBanner.start()
+    }
 
+    override fun setBanner(banner: List<BannerResponse>) {
+        mMyBanner.run {
+            setIndicatorVisible(true)
+            setDelayedTime(3000)
+            duration = 1500
+            setPages(banner, MZHolderCreator {
+                BannerViewHolder()
+            })
+        }
+        mMyBanner.start()
+    }
+
+    override fun addBanner(homeAdapter: HomeAdapter) {
+        if (homeAdapter.headerLayoutCount < 1) {
+            homeAdapter.addHeaderView(mBannerView)
+        }
     }
 
     override fun setContent(homeAdapter: HomeAdapter) {
         rv_home.run {
             layoutManager = LinearLayoutManager(_mActivity)
             adapter = homeAdapter
+        }
+    }
+
+    private fun initView() {
+        mBannerView = layoutInflater.inflate(R.layout.layout_banner, null, false)
+        mMyBanner = mBannerView.findViewById(R.id.banner)
+        refresh_layout.run {
+            setOnRefreshListener {
+                mPresenter?.initBanner()
+//                mPresenter?.initAdapter()
+                mPresenter?.initData(0)
+            }
         }
     }
 

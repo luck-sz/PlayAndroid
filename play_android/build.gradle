@@ -77,6 +77,8 @@ dependencies {
     implementation 'com.github.pinguo-zhouwei:MZBannerView:v2.0.2'
     // 基础适配器
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.47'
+    // 控件样式
+    implementation 'com.noober.background:core:1.6.0'
 
     //test
     debugImplementation rootProject.ext.dependencies["canary-debug"]

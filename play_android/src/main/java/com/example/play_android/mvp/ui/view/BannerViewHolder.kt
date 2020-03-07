@@ -14,7 +14,7 @@ import com.zhouwei.mzbanner.holder.MZViewHolder
 
 class BannerViewHolder : MZViewHolder<BannerResponse> {
 
-    lateinit var mImageView: ImageView
+    private lateinit var mImageView: ImageView
 
     override fun createView(context: Context): View {
         // 返回页面布局
