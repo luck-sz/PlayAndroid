@@ -78,6 +78,7 @@
     <string name="network_unavailable_tip">网络连接不可用,请检查网络设置!</string>
 
     <!-- Menu Action -->
+    <string name="action_add">添加</string>
     <string name="action_search">搜索</string>
     <string name="action_share">分享</string>
     <string name="action_like">收藏</string>

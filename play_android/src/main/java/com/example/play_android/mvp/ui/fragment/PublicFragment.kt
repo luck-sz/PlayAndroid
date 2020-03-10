@@ -18,7 +18,7 @@ import com.example.play_android.R
 import com.example.play_android.app.api.entity.ClassifyResponse
 import com.example.play_android.app.base.MySupportFragment
 import com.example.play_android.app.event.OpenDrawer
-import com.example.play_android.mvp.ui.adapter.ViewPagerAdapter
+import com.example.play_android.mvp.ui.adapter.PublicTabAdapter
 import kotlinx.android.synthetic.main.fragment_public.*
 import kotlinx.android.synthetic.main.include_title_tab.*
 import org.simple.eventbus.EventBus
@@ -31,7 +31,7 @@ class PublicFragment : MySupportFragment<PublicPresenter>(), PublicContract.View
         }
     }
 
-    private var adapter: ViewPagerAdapter? = null
+    private var adapter: PublicTabAdapter? = null
 
     override fun setupFragmentComponent(appComponent: AppComponent) {
         DaggerPublicComponent //如找不到该类,请编译一下项目
@@ -87,7 +87,7 @@ class PublicFragment : MySupportFragment<PublicPresenter>(), PublicContract.View
     }
 
     override fun setTabTitle(classIfy: MutableList<ClassifyResponse>) {
-        adapter = ViewPagerAdapter(childFragmentManager, classIfy)
+        adapter = PublicTabAdapter(childFragmentManager, classIfy)
         vp_content.adapter = adapter
         tab.run {
             setViewPager(vp_content)

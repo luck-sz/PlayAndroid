@@ -36,4 +36,16 @@ interface ApiService {
      */
     @GET("/wxarticle/chapters/json")
     fun getPublicTypes(): Observable<ApiResponse<MutableList<ClassifyResponse>>>
+
+    /**
+     * 获取公众号数据
+     */
+    @GET("/wxarticle/list/{id}/{page}/json")
+    fun getPublicData(@Path("page") pageNo: Int, @Path("id") id: Int): Observable<ApiResponse<ApiPagerResponse<MutableList<ArticleResponse>>>>
+
+    /**
+     * 项目分类
+     */
+    @GET("/project/tree/json")
+    fun getProjectTypes(): Observable<ApiResponse<MutableList<ClassifyResponse>>>
 }

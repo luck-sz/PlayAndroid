@@ -6,9 +6,10 @@
         android:title="@string/home_main" />
 
     <item
-        android:id="@+id/nav_square"
-        android:icon="@drawable/ic_square"
-        android:title="@string/home_square" />
+        android:id="@+id/nav_project"
+        android:icon="@drawable/ic_project"
+        android:title="@string/home_project" />
+
 
     <item
         android:id="@+id/nav_public"
@@ -21,7 +22,8 @@
         android:title="@string/home_system" />
 
     <item
-        android:id="@+id/nav_project"
-        android:icon="@drawable/ic_project"
-        android:title="@string/home_project" />
+        android:id="@+id/nav_square"
+        android:icon="@drawable/ic_square"
+        android:title="@string/home_square" />
+
 </menu>

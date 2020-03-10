@@ -7,7 +7,7 @@ import com.example.play_android.app.api.entity.ClassifyResponse
 
 import com.example.play_android.mvp.ui.fragment.PublicChildFragment
 
-class ViewPagerAdapter(
+class PublicTabAdapter(
     fm: FragmentManager,
     private val list: MutableList<ClassifyResponse>
 ) : FragmentStatePagerAdapter(fm) {

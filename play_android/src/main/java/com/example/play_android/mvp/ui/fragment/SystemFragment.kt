@@ -21,6 +21,7 @@ import com.example.play_android.R
 import com.example.play_android.app.base.MySupportFragment
 import com.example.play_android.app.event.OpenDrawer
 import kotlinx.android.synthetic.main.include_title.*
+import kotlinx.android.synthetic.main.include_title_tab.*
 import org.simple.eventbus.EventBus
 
 
@@ -76,7 +77,7 @@ class SystemFragment : MySupportFragment<SystemPresenter>(), SystemContract.View
     }
 
     override fun initData(savedInstanceState: Bundle?) {
-        toolbar_home.run {
+        toolbar_home_tab.run {
             title = "体系"
             inflateMenu(R.menu.menu_activity_home)
             setNavigationOnClickListener {

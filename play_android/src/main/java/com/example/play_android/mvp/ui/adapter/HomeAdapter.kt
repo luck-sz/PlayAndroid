@@ -20,7 +20,7 @@ class HomeAdapter(layoutResId: Int, data: List<ArticleResponse>) :
             // 是否显示置顶
             helper.setGone(R.id.item_home_top, type == 1)
             // 是否显示问答
-            if (tags.isNotEmpty()) {
+            if (tags.isNotEmpty() && tags[0].name != "公众号") {
                 helper.setGone(R.id.item_home_ask, true)
                 helper.setText(R.id.item_home_ask, tags[0].name)
             } else {

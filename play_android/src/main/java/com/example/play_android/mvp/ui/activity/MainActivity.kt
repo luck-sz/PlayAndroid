@@ -120,20 +120,20 @@ class MainActivity : MySupportActivity<MainPresenter>(), MainContract.View {
         val homeFragment = findFragment(HomeFragment::class.java)
         if (homeFragment == null) {
             mFragments[0] = HomeFragment.newInstance()//主页
-            mFragments[1] = SquareFragment.newInstance()//广场
+            mFragments[1] = ProjectFragment.newInstance()//项目
             mFragments[2] = PublicFragment.newInstance()//公众号
             mFragments[3] = SystemFragment.newInstance()//体系
-            mFragments[4] = ProjectFragment.newInstance()//我的
+            mFragments[4] = SquareFragment.newInstance()//广场
             loadMultipleRootFragment(
                 R.id.frame_content, 0, mFragments[0]
                 , mFragments[1], mFragments[2], mFragments[3], mFragments[4]
             )
         } else {
             mFragments[0] = homeFragment
-            mFragments[1] = findFragment(SquareFragment::class.java)
+            mFragments[1] = findFragment(ProjectFragment::class.java)
             mFragments[2] = findFragment(PublicFragment::class.java)
             mFragments[3] = findFragment(SystemFragment::class.java)
-            mFragments[4] = findFragment(ProjectFragment::class.java)
+            mFragments[4] = findFragment(SquareFragment::class.java)
         }
     }
 
@@ -155,7 +155,7 @@ class MainActivity : MySupportActivity<MainPresenter>(), MainContract.View {
                     R.id.nav_main -> {
                         showHideFragment(mFragments[0])
                     }
-                    R.id.nav_square -> {
+                    R.id.nav_project -> {
                         showHideFragment(mFragments[1])
                     }
                     R.id.nav_public -> {
@@ -164,7 +164,7 @@ class MainActivity : MySupportActivity<MainPresenter>(), MainContract.View {
                     R.id.nav_system -> {
                         showHideFragment(mFragments[3])
                     }
-                    R.id.nav_project -> {
+                    R.id.nav_square -> {
                         showHideFragment(mFragments[4])
                     }
                 }

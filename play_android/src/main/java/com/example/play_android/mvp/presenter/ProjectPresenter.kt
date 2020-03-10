@@ -1,6 +1,8 @@
 package com.example.play_android.mvp.presenter
 
 import android.app.Application
+import com.example.play_android.app.api.entity.ApiResponse
+import com.example.play_android.app.api.entity.ClassifyResponse
 
 import com.jess.arms.integration.AppManager
 import com.jess.arms.di.scope.FragmentScope
@@ -10,6 +12,10 @@ import me.jessyan.rxerrorhandler.core.RxErrorHandler
 import javax.inject.Inject
 
 import com.example.play_android.mvp.contract.ProjectContract
+import com.jess.arms.utils.RxLifecycleUtils
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber
 
 
 /**
@@ -38,8 +44,20 @@ constructor(model: ProjectContract.Model, rootView: ProjectContract.View) :
     @Inject
     lateinit var mAppManager: AppManager
 
+    fun initTabTitle() {
+        mModel.getProjectTypes()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+            .subscribe(object :
+                ErrorHandleSubscriber<ApiResponse<MutableList<ClassifyResponse>>>(mErrorHandler) {
+                override fun onNext(response: ApiResponse<MutableList<ClassifyResponse>>) {
+                    mRootView.setTabTitle(response.data)
+                }
+            })
+    }
 
     override fun onDestroy() {
-        super.onDestroy();
+        super.onDestroy()
     }
 }

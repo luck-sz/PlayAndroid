@@ -84,7 +84,7 @@ class SquareFragment : MySupportFragment<SquarePresenter>(), SquareContract.View
     override fun initData(savedInstanceState: Bundle?) {
         toolbar_home.run {
             title = "广场"
-            inflateMenu(R.menu.menu_activity_home)
+            inflateMenu(R.menu.menu_activity_square)
             setNavigationOnClickListener {
                 EventBus.getDefault().post(OpenDrawer(), "OpenDrawer")
             }

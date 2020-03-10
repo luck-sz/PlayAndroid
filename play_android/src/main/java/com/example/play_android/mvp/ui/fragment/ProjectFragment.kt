@@ -2,13 +2,10 @@ package com.example.play_android.mvp.ui.fragment
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Message
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
-import com.jess.arms.base.BaseFragment
 import com.jess.arms.di.component.AppComponent
 import com.jess.arms.utils.ArmsUtils
 
@@ -18,9 +15,14 @@ import com.example.play_android.mvp.contract.ProjectContract
 import com.example.play_android.mvp.presenter.ProjectPresenter
 
 import com.example.play_android.R
+import com.example.play_android.app.api.entity.ClassifyResponse
 import com.example.play_android.app.base.MySupportFragment
 import com.example.play_android.app.event.OpenDrawer
+import com.example.play_android.mvp.ui.adapter.ProjectTabAdapter
+import com.example.play_android.mvp.ui.adapter.PublicTabAdapter
+import kotlinx.android.synthetic.main.fragment_project.*
 import kotlinx.android.synthetic.main.include_title.*
+import kotlinx.android.synthetic.main.include_title_tab.*
 import org.simple.eventbus.EventBus
 
 
@@ -57,6 +59,7 @@ class ProjectFragment : MySupportFragment<ProjectPresenter>(), ProjectContract.V
         }
     }
 
+    private var adapter: ProjectTabAdapter? = null
 
     override fun setupFragmentComponent(appComponent: AppComponent) {
         DaggerProjectComponent //如找不到该类,请编译一下项目
@@ -76,7 +79,8 @@ class ProjectFragment : MySupportFragment<ProjectPresenter>(), ProjectContract.V
     }
 
     override fun initData(savedInstanceState: Bundle?) {
-        toolbar_home.run {
+        mPresenter?.initTabTitle()
+        toolbar_home_tab.run {
             title = "项目"
             inflateMenu(R.menu.menu_activity_home)
             setNavigationOnClickListener {
@@ -107,5 +111,14 @@ class ProjectFragment : MySupportFragment<ProjectPresenter>(), ProjectContract.V
 
     override fun killMyself() {
 
+    }
+
+    override fun setTabTitle(classIfy: MutableList<ClassifyResponse>) {
+        adapter = ProjectTabAdapter(childFragmentManager, classIfy)
+        vp_content.adapter = adapter
+        tab.run {
+            setViewPager(vp_content)
+            currentTab = 0
+        }
     }
 }
