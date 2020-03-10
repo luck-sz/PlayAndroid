@@ -15,37 +15,14 @@ import com.example.play_android.mvp.contract.PublicContract
 import com.example.play_android.mvp.presenter.PublicPresenter
 
 import com.example.play_android.R
+import com.example.play_android.app.api.entity.ClassifyResponse
 import com.example.play_android.app.base.MySupportFragment
 import com.example.play_android.app.event.OpenDrawer
-import kotlinx.android.synthetic.main.include_title.*
+import com.example.play_android.mvp.ui.adapter.ViewPagerAdapter
+import kotlinx.android.synthetic.main.fragment_public.*
+import kotlinx.android.synthetic.main.include_title_tab.*
 import org.simple.eventbus.EventBus
 
-
-/**
- * ================================================
- * Description:
- * <p>
- * Created by MVPArmsTemplate on 02/11/2020 20:46
- * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
- * <a href="https://github.com/JessYanCoding">Follow me</a>
- * <a href="https://github.com/JessYanCoding/MVPArms">Star me</a>
- * <a href="https://github.com/JessYanCoding/MVPArms/wiki">See me</a>
- * <a href="https://github.com/JessYanCoding/MVPArmsTemplate">模版请保持更新</a>
- * ================================================
- */
-/**
- * 如果没presenter
- * 你可以这样写
- *
- * @FragmentScope(請注意命名空間) class NullObjectPresenterByFragment
- * @Inject constructor() : IPresenter {
- * override fun onStart() {
- * }
- *
- * override fun onDestroy() {
- * }
- * }
- */
 class PublicFragment : MySupportFragment<PublicPresenter>(), PublicContract.View {
     companion object {
         fun newInstance(): PublicFragment {
@@ -53,6 +30,8 @@ class PublicFragment : MySupportFragment<PublicPresenter>(), PublicContract.View
             return fragment
         }
     }
+
+    private var adapter: ViewPagerAdapter? = null
 
     override fun setupFragmentComponent(appComponent: AppComponent) {
         DaggerPublicComponent //如找不到该类,请编译一下项目
@@ -72,13 +51,15 @@ class PublicFragment : MySupportFragment<PublicPresenter>(), PublicContract.View
     }
 
     override fun initData(savedInstanceState: Bundle?) {
-        toolbar_home.run {
+        toolbar_home_tab.run {
             title = "公众号"
             inflateMenu(R.menu.menu_activity_home)
             setNavigationOnClickListener {
                 EventBus.getDefault().post(OpenDrawer(), "OpenDrawer")
             }
         }
+        mPresenter?.initTabTitle()
+
     }
 
     override fun setData(data: Any?) {
@@ -103,5 +84,14 @@ class PublicFragment : MySupportFragment<PublicPresenter>(), PublicContract.View
 
     override fun killMyself() {
 
+    }
+
+    override fun setTabTitle(classIfy: MutableList<ClassifyResponse>) {
+        adapter = ViewPagerAdapter(childFragmentManager, classIfy)
+        vp_content.adapter = adapter
+        tab.run {
+            setViewPager(vp_content)
+            currentTab = 0
+        }
     }
 }

@@ -1,9 +1,6 @@
 package com.example.play_android.app.api.service
 
-import com.example.play_android.app.api.entity.ApiPagerResponse
-import com.example.play_android.app.api.entity.ApiResponse
-import com.example.play_android.app.api.entity.ArticleResponse
-import com.example.play_android.app.api.entity.BannerResponse
+import com.example.play_android.app.api.entity.*
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -33,4 +30,10 @@ interface ApiService {
      */
     @GET("/user_article/list/{page}/json")
     fun getSquareList(@Path("page") pageNo: Int): Observable<ApiResponse<ApiPagerResponse<MutableList<ArticleResponse>>>>
+
+    /**
+     * 公众号分类
+     */
+    @GET("/wxarticle/chapters/json")
+    fun getPublicTypes(): Observable<ApiResponse<MutableList<ClassifyResponse>>>
 }

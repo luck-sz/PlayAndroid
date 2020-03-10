@@ -1,8 +1,6 @@
 package com.example.play_android.mvp.presenter
 
 import android.app.Application
-import com.example.play_android.app.api.entity.ApiResponse
-import com.example.play_android.app.api.entity.ClassifyResponse
 
 import com.jess.arms.integration.AppManager
 import com.jess.arms.di.scope.FragmentScope
@@ -11,18 +9,16 @@ import com.jess.arms.http.imageloader.ImageLoader
 import me.jessyan.rxerrorhandler.core.RxErrorHandler
 import javax.inject.Inject
 
-import com.example.play_android.mvp.contract.PublicContract
-import com.jess.arms.utils.RxLifecycleUtils
+import com.example.play_android.mvp.contract.PublicChildContract
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber
 
 
 /**
  * ================================================
  * Description:
  * <p>
- * Created by MVPArmsTemplate on 02/11/2020 20:46
+ * Created by MVPArmsTemplate on 03/10/2020 14:01
  * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
  * <a href="https://github.com/JessYanCoding">Follow me</a>
  * <a href="https://github.com/JessYanCoding/MVPArms">Star me</a>
@@ -31,10 +27,10 @@ import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber
  * ================================================
  */
 @FragmentScope
-class PublicPresenter
+class PublicChildPresenter
 @Inject
-constructor(model: PublicContract.Model, rootView: PublicContract.View) :
-    BasePresenter<PublicContract.Model, PublicContract.View>(model, rootView) {
+constructor(model: PublicChildContract.Model, rootView: PublicChildContract.View) :
+    BasePresenter<PublicChildContract.Model, PublicChildContract.View>(model, rootView) {
     @Inject
     lateinit var mErrorHandler: RxErrorHandler
     @Inject
@@ -44,18 +40,7 @@ constructor(model: PublicContract.Model, rootView: PublicContract.View) :
     @Inject
     lateinit var mAppManager: AppManager
 
-    fun initTabTitle() {
-        mModel.getPublicTypes()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
-            .subscribe(object :
-                ErrorHandleSubscriber<ApiResponse<MutableList<ClassifyResponse>>>(mErrorHandler) {
-                override fun onNext(response: ApiResponse<MutableList<ClassifyResponse>>) {
-                    mRootView.setTabTitle(response.data)
-                }
-            })
-    }
+
 
     override fun onDestroy() {
         super.onDestroy()
