@@ -13,6 +13,7 @@ android {
     }
 
     defaultConfig {
+        multiDexEnabled true
         applicationId "com.example.play_android"
         minSdkVersion rootProject.ext.android["minSdkVersion"]
         targetSdkVersion rootProject.ext.android["targetSdkVersion"]
@@ -44,6 +45,7 @@ android {
         disable "ResourceType"
         abortOnError false
     }
+
 }
 
 dependencies {
@@ -81,6 +83,8 @@ dependencies {
     implementation 'com.noober.background:core:1.6.0'
     // TabLayout
     implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
+    // 方法过多
+    implementation 'com.android.support:multidex:1.0.3'
 
     //test
     debugImplementation rootProject.ext.dependencies["canary-debug"]

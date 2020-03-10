@@ -2,6 +2,7 @@ package com.example.play_android.app
 
 import android.app.Application
 import android.content.Context
+import android.support.multidex.MultiDex
 
 import com.jess.arms.base.delegate.AppLifecycles
 import com.jess.arms.integration.cache.IntelligentCache
@@ -29,7 +30,7 @@ import timber.log.Timber
 class AppLifecyclesImpl : AppLifecycles {
 
     override fun attachBaseContext(base: Context) {
-        //          MultiDex.install(base);  //这里比 onCreate 先执行,常用于 MultiDex 初始化,插件化框架的初始化
+        MultiDex.install(base) //这里比 onCreate 先执行,常用于 MultiDex 初始化,插件化框架的初始化
     }
 
     override fun onCreate(application: Application) {

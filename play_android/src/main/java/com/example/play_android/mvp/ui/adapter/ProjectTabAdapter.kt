@@ -5,9 +5,6 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
 import com.example.play_android.app.api.entity.ClassifyResponse
 import com.example.play_android.mvp.ui.fragment.ProjectChildFragment
-import com.example.play_android.mvp.ui.fragment.ProjectFragment
-
-import com.example.play_android.mvp.ui.fragment.PublicChildFragment
 
 class ProjectTabAdapter(
     fm: FragmentManager,

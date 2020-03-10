@@ -8,14 +8,14 @@ import com.jess.arms.mvp.BaseModel
 import com.jess.arms.di.scope.FragmentScope
 import javax.inject.Inject
 
-import com.example.play_android.mvp.contract.SystemContract
+import com.example.play_android.mvp.contract.NavigationContract
 
 
 /**
  * ================================================
  * Description:
  * <p>
- * Created by MVPArmsTemplate on 02/11/2020 20:47
+ * Created by MVPArmsTemplate on 03/10/2020 20:53
  * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
  * <a href="https://github.com/JessYanCoding">Follow me</a>
  * <a href="https://github.com/JessYanCoding/MVPArms">Star me</a>
@@ -24,18 +24,16 @@ import com.example.play_android.mvp.contract.SystemContract
  * ================================================
  */
 @FragmentScope
-class SystemModel
+class NavigationModel
 @Inject
 constructor(repositoryManager: IRepositoryManager) : BaseModel(repositoryManager),
-    SystemContract.Model {
+    NavigationContract.Model {
     @Inject
-    lateinit var mGson: Gson
+    lateinit var mGson: Gson;
     @Inject
-    lateinit var mApplication: Application
-
-    override fun getTitle(): Array<String> = arrayOf("体系", "导航")
+    lateinit var mApplication: Application;
 
     override fun onDestroy() {
-        super.onDestroy()
+        super.onDestroy();
     }
 }
