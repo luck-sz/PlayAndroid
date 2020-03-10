@@ -2,13 +2,10 @@ package com.example.play_android.mvp.ui.fragment
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Message
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
-import com.jess.arms.base.BaseFragment
 import com.jess.arms.di.component.AppComponent
 import com.jess.arms.utils.ArmsUtils
 
@@ -19,6 +16,9 @@ import com.example.play_android.mvp.presenter.PublicPresenter
 
 import com.example.play_android.R
 import com.example.play_android.app.base.MySupportFragment
+import com.example.play_android.app.event.OpenDrawer
+import kotlinx.android.synthetic.main.include_title.*
+import org.simple.eventbus.EventBus
 
 
 /**
@@ -54,7 +54,6 @@ class PublicFragment : MySupportFragment<PublicPresenter>(), PublicContract.View
         }
     }
 
-
     override fun setupFragmentComponent(appComponent: AppComponent) {
         DaggerPublicComponent //如找不到该类,请编译一下项目
             .builder()
@@ -73,7 +72,13 @@ class PublicFragment : MySupportFragment<PublicPresenter>(), PublicContract.View
     }
 
     override fun initData(savedInstanceState: Bundle?) {
-
+        toolbar_home.run {
+            title = "公众号"
+            inflateMenu(R.menu.menu_activity_home)
+            setNavigationOnClickListener {
+                EventBus.getDefault().post(OpenDrawer(), "OpenDrawer")
+            }
+        }
     }
 
     override fun setData(data: Any?) {

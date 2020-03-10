@@ -19,6 +19,9 @@ import com.example.play_android.mvp.presenter.ProjectPresenter
 
 import com.example.play_android.R
 import com.example.play_android.app.base.MySupportFragment
+import com.example.play_android.app.event.OpenDrawer
+import kotlinx.android.synthetic.main.include_title.*
+import org.simple.eventbus.EventBus
 
 
 /**
@@ -73,7 +76,13 @@ class ProjectFragment : MySupportFragment<ProjectPresenter>(), ProjectContract.V
     }
 
     override fun initData(savedInstanceState: Bundle?) {
-
+        toolbar_home.run {
+            title = "项目"
+            inflateMenu(R.menu.menu_activity_home)
+            setNavigationOnClickListener {
+                EventBus.getDefault().post(OpenDrawer(), "OpenDrawer")
+            }
+        }
     }
 
     override fun setData(data: Any?) {

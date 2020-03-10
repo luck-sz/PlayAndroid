@@ -21,6 +21,8 @@ import com.jess.arms.utils.ArmsUtils;
 import com.noober.background.BackgroundLibrary;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 
+import org.simple.eventbus.EventBus;
+
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
@@ -80,12 +82,14 @@ public abstract class MySupportActivity<P extends IPresenter> extends SupportAct
             e.printStackTrace();
         }
 //        initImmersionBar();
+        EventBus.getDefault().register(this);
         initData(savedInstanceState);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        EventBus.getDefault().unregister(this);
         if (mUnbinder != null && mUnbinder != Unbinder.EMPTY)
             mUnbinder.unbind();
         this.mUnbinder = null;

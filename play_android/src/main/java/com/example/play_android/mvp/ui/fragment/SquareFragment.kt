@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Message
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +20,13 @@ import com.example.play_android.mvp.presenter.SquarePresenter
 
 import com.example.play_android.R
 import com.example.play_android.app.base.MySupportFragment
+import com.example.play_android.app.event.OpenDrawer
+import com.example.play_android.mvp.ui.adapter.HomeAdapter
+import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_home.refresh_layout
+import kotlinx.android.synthetic.main.fragment_square.*
+import kotlinx.android.synthetic.main.include_title.*
+import org.simple.eventbus.EventBus
 
 
 /**
@@ -47,6 +55,7 @@ import com.example.play_android.app.base.MySupportFragment
  * }
  */
 class SquareFragment : MySupportFragment<SquarePresenter>(), SquareContract.View {
+
     companion object {
         fun newInstance(): SquareFragment {
             val fragment = SquareFragment()
@@ -73,7 +82,19 @@ class SquareFragment : MySupportFragment<SquarePresenter>(), SquareContract.View
     }
 
     override fun initData(savedInstanceState: Bundle?) {
-
+        toolbar_home.run {
+            title = "广场"
+            inflateMenu(R.menu.menu_activity_home)
+            setNavigationOnClickListener {
+                EventBus.getDefault().post(OpenDrawer(), "OpenDrawer")
+            }
+        }
+        refresh_layout.run {
+            setOnRefreshListener {
+                mPresenter?.initAdapter(0)
+            }
+        }
+        mPresenter?.initAdapter(0)
     }
 
     override fun setData(data: Any?) {
@@ -81,11 +102,11 @@ class SquareFragment : MySupportFragment<SquarePresenter>(), SquareContract.View
     }
 
     override fun showLoading() {
-
+        refresh_layout.isRefreshing = true
     }
 
     override fun hideLoading() {
-
+        refresh_layout.isRefreshing = false
     }
 
     override fun showMessage(message: String) {
@@ -98,5 +119,12 @@ class SquareFragment : MySupportFragment<SquarePresenter>(), SquareContract.View
 
     override fun killMyself() {
 
+    }
+
+    override fun setAdapter(homeAdapter: HomeAdapter) {
+        rv_square.run {
+            layoutManager = LinearLayoutManager(_mActivity)
+            adapter = homeAdapter
+        }
     }
 }

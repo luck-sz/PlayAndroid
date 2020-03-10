@@ -38,11 +38,6 @@ interface HomeContract {
     //Model层定义接口,外部只需关心Model返回的数据,无需关心内部细节,即是否使用缓存
     interface Model : IModel {
         fun getBanner(): Observable<ApiResponse<List<BannerResponse>>>
-
-        fun getTopArticle(): Observable<ApiResponse<MutableList<ArticleResponse>>>
-
-        fun getArticle(pageNo: Int): Observable<ApiResponse<ApiPagerResponse<MutableList<ArticleResponse>>>>
-
         // 获取首页文章数据(包括置顶文章)
         fun getHomePage(pageNo: Int): Observable<MutableList<ArticleResponse>>
     }

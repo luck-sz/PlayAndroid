@@ -47,16 +47,6 @@ constructor(repositoryManager: IRepositoryManager) : BaseModel(repositoryManager
             .getBanner()
     }
 
-    override fun getTopArticle(): Observable<ApiResponse<MutableList<ArticleResponse>>> {
-        return mRepositoryManager.obtainRetrofitService(ApiService::class.java)
-            .getTopArticleList()
-    }
-
-    override fun getArticle(pageNo: Int): Observable<ApiResponse<ApiPagerResponse<MutableList<ArticleResponse>>>> {
-        return mRepositoryManager.obtainRetrofitService(ApiService::class.java)
-            .getArticleList(pageNo)
-    }
-
     override fun getHomePage(pageNo: Int): Observable<MutableList<ArticleResponse>> {
         val mTopArticle: Observable<MutableList<ArticleResponse>> =
             mRepositoryManager.obtainRetrofitService(ApiService::class.java)

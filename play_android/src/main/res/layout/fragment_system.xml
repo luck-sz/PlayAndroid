@@ -5,6 +5,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <include layout="@layout/include_title"/>
+
     <TextView
         android:gravity="center"
         android:text="@string/home_system"

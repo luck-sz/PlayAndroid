@@ -19,6 +19,9 @@ import com.example.play_android.mvp.presenter.SystemPresenter
 
 import com.example.play_android.R
 import com.example.play_android.app.base.MySupportFragment
+import com.example.play_android.app.event.OpenDrawer
+import kotlinx.android.synthetic.main.include_title.*
+import org.simple.eventbus.EventBus
 
 
 /**
@@ -73,7 +76,13 @@ class SystemFragment : MySupportFragment<SystemPresenter>(), SystemContract.View
     }
 
     override fun initData(savedInstanceState: Bundle?) {
-
+        toolbar_home.run {
+            title = "体系"
+            inflateMenu(R.menu.menu_activity_home)
+            setNavigationOnClickListener {
+                EventBus.getDefault().post(OpenDrawer(), "OpenDrawer")
+            }
+        }
     }
 
     override fun setData(data: Any?) {

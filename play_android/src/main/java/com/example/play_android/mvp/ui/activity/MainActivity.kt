@@ -10,7 +10,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 
-import com.jess.arms.base.BaseActivity
 import com.jess.arms.di.component.AppComponent
 import com.jess.arms.utils.ArmsUtils
 
@@ -20,10 +19,15 @@ import com.example.play_android.mvp.contract.MainContract
 import com.example.play_android.mvp.presenter.MainPresenter
 import com.example.play_android.R
 import com.example.play_android.app.base.MySupportActivity
+import com.example.play_android.app.event.OpenDrawer
 import com.example.play_android.mvp.ui.fragment.*
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_home.view.*
+import kotlinx.android.synthetic.main.include_title.*
 import kotlinx.android.synthetic.main.main_content.*
 import me.yokeyword.fragmentation.SupportFragment
+import org.simple.eventbus.EventBus
+import org.simple.eventbus.Subscriber
 
 // 扩展方法
 fun Context.showToast(msg: String) {
@@ -34,7 +38,6 @@ class MainActivity : MySupportActivity<MainPresenter>(), MainContract.View {
 
     // 存放切换页的Fragment数组
     private val mFragments = arrayOfNulls<SupportFragment>(5)
-    private val mTitle = arrayOf("首页", "广场", "公众号", "体系", "项目")
     private var mExitTime: Long = 0
 
     override fun setupActivityComponent(appComponent: AppComponent) {
@@ -53,7 +56,6 @@ class MainActivity : MySupportActivity<MainPresenter>(), MainContract.View {
     override fun initData(savedInstanceState: Bundle?) {
         initFragment()
         initDrawerLayout()
-        initToolbar()
         initBottomNav()
     }
 
@@ -76,21 +78,6 @@ class MainActivity : MySupportActivity<MainPresenter>(), MainContract.View {
 
     override fun killMyself() {
         finish()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_activity_main, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId) {
-            R.id.action_search -> {
-                showToast("搜索...")
-                return true
-            }
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     /**
@@ -117,7 +104,7 @@ class MainActivity : MySupportActivity<MainPresenter>(), MainContract.View {
             val toggle = ActionBarDrawerToggle(
                 this@MainActivity,
                 this,
-                toolbar
+                toolbar_home
                 , R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close
             )
@@ -150,17 +137,9 @@ class MainActivity : MySupportActivity<MainPresenter>(), MainContract.View {
         }
     }
 
-    /**
-     * 初始化toolbar
-     */
-    private fun initToolbar() {
-        toolbar.run {
-            setSupportActionBar(this)
-            title = mTitle[0]
-            setNavigationOnClickListener {
-                drawer_layout.openDrawer(Gravity.START)
-            }
-        }
+    @Subscriber(tag = "OpenDrawer")
+    fun openDrawer(openDrawer: OpenDrawer) {
+        drawer_layout.openDrawer(Gravity.START)
     }
 
     /**
@@ -175,27 +154,23 @@ class MainActivity : MySupportActivity<MainPresenter>(), MainContract.View {
                 when (it.itemId) {
                     R.id.nav_main -> {
                         showHideFragment(mFragments[0])
-                        toolbar.title = mTitle[0]
                     }
                     R.id.nav_square -> {
                         showHideFragment(mFragments[1])
-                        toolbar.title = mTitle[1]
                     }
                     R.id.nav_public -> {
                         showHideFragment(mFragments[2])
-                        toolbar.title = mTitle[2]
                     }
                     R.id.nav_system -> {
                         showHideFragment(mFragments[3])
-                        toolbar.title = mTitle[3]
                     }
                     R.id.nav_project -> {
                         showHideFragment(mFragments[4])
-                        toolbar.title = mTitle[4]
                     }
                 }
                 true
             }
         }
     }
+
 }

@@ -27,4 +27,10 @@ interface ApiService {
      */
     @GET("/article/list/{page}/json")
     fun getArticleList(@Path("page") pageNo: Int): Observable<ApiResponse<ApiPagerResponse<MutableList<ArticleResponse>>>>
+
+    /**
+     * 获取广场列表数据
+     */
+    @GET("/user_article/list/{page}/json")
+    fun getSquareList(@Path("page") pageNo: Int): Observable<ApiResponse<ApiPagerResponse<MutableList<ArticleResponse>>>>
 }

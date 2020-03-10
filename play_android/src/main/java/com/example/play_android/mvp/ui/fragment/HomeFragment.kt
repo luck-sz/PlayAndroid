@@ -18,11 +18,14 @@ import com.example.play_android.mvp.presenter.HomePresenter
 import com.example.play_android.R
 import com.example.play_android.app.api.entity.BannerResponse
 import com.example.play_android.app.base.MySupportFragment
+import com.example.play_android.app.event.OpenDrawer
 import com.example.play_android.mvp.ui.adapter.HomeAdapter
 import com.example.play_android.mvp.ui.view.BannerViewHolder
 import com.zhouwei.mzbanner.MZBannerView
 import com.zhouwei.mzbanner.holder.MZHolderCreator
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.include_title.*
+import org.simple.eventbus.EventBus
 
 class HomeFragment : MySupportFragment<HomePresenter>(), HomeContract.View {
 
@@ -121,6 +124,13 @@ class HomeFragment : MySupportFragment<HomePresenter>(), HomeContract.View {
     private fun initView() {
         mBannerView = layoutInflater.inflate(R.layout.layout_banner, null, false)
         mMyBanner = mBannerView.findViewById(R.id.banner)
+        toolbar_home.run {
+            title = "首页"
+            inflateMenu(R.menu.menu_activity_home)
+            setNavigationOnClickListener {
+                EventBus.getDefault().post(OpenDrawer(), "OpenDrawer")
+            }
+        }
         refresh_layout.run {
             setOnRefreshListener {
                 mPresenter?.initBanner()
