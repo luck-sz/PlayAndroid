@@ -12,7 +12,7 @@ class ProjectTabAdapter(
 ) : FragmentStatePagerAdapter(fm) {
 
     override fun getItem(position: Int): Fragment {
-        return ProjectChildFragment.newInstance()
+        return ProjectChildFragment.newInstance(list[position].id)
     }
 
     override fun getPageTitle(position: Int): CharSequence? = list[position].name

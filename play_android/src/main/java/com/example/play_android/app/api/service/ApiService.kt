@@ -4,6 +4,7 @@ import com.example.play_android.app.api.entity.*
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ApiService {
 
@@ -48,4 +49,10 @@ interface ApiService {
      */
     @GET("/project/tree/json")
     fun getProjectTypes(): Observable<ApiResponse<MutableList<ClassifyResponse>>>
+
+    /**
+     * 根据分类id获取项目数据
+     */
+    @GET("/project/list/{page}/json")
+    fun getProjectDataByType(@Path("page") pageNo: Int, @Query("cid") cid: Int): Observable<ApiResponse<ApiPagerResponse<MutableList<ArticleResponse>>>>
 }
