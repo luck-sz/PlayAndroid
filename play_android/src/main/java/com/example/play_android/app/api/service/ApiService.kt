@@ -55,4 +55,10 @@ interface ApiService {
      */
     @GET("/project/list/{page}/json")
     fun getProjectDataByType(@Path("page") pageNo: Int, @Query("cid") cid: Int): Observable<ApiResponse<ApiPagerResponse<MutableList<ArticleResponse>>>>
+
+    /**
+     * 获取体系标签数据
+     */
+    @GET("/tree/json")
+    fun getSystemData(): Observable<ApiResponse<MutableList<SystemResponse>>>
 }

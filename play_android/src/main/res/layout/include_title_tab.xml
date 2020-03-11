@@ -16,6 +16,7 @@
             android:id="@+id/toolbar_home_tab"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            app:layout_scrollFlags="scroll|enterAlways"
             app:navigationIcon="@drawable/ic_menu_24dp"
             app:popupTheme="@style/AppTheme.PopupOverlay"
             app:titleTextAppearance="@style/Toolbar.TitleText" />

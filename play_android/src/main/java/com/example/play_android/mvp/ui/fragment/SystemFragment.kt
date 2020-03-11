@@ -86,7 +86,7 @@ class SystemFragment : MySupportFragment<SystemPresenter>(), SystemContract.View
 
     override fun setTabTitle(titles: Array<String>) {
         fragments.run {
-            add(NavigationFragment.newInstance())
+            add(SystemChildFragment.newInstance())
             add(NavigationFragment.newInstance())
         }
         adapter = SystemTabAdapter(childFragmentManager, fragments)

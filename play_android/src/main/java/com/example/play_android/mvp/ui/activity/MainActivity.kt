@@ -2,6 +2,7 @@ package com.example.play_android.mvp.ui.activity
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.ActionBarDrawerToggle
 import android.view.Gravity
@@ -28,10 +29,25 @@ import kotlinx.android.synthetic.main.main_content.*
 import me.yokeyword.fragmentation.SupportFragment
 import org.simple.eventbus.EventBus
 import org.simple.eventbus.Subscriber
+import java.util.*
 
 // 扩展方法
 fun Context.showToast(msg: String) {
     Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+}
+
+/**
+ * 获取随机rgb颜色值
+ */
+fun randomColor(): Int {
+    Random().run {
+        //0-190, 如果颜色值过大,就越接近白色,就看不清了,所以需要限定范围
+        val red = nextInt(190)
+        val green = nextInt(190)
+        val blue = nextInt(190)
+        //使用rgb混合生成一种新的颜色,Color.rgb生成的是一个int数
+        return Color.rgb(red, green, blue)
+    }
 }
 
 class MainActivity : MySupportActivity<MainPresenter>(), MainContract.View {

@@ -5,7 +5,7 @@ import com.chad.library.adapter.base.BaseViewHolder
 import com.example.play_android.R
 import com.example.play_android.app.api.entity.ArticleResponse
 
-class HomeAdapter(layoutResId: Int, data: List<ArticleResponse>) :
+class HomeAdapter(layoutResId: Int, data: MutableList<ArticleResponse>) :
     BaseQuickAdapter<ArticleResponse, BaseViewHolder>(layoutResId, data) {
 
     override fun convert(helper: BaseViewHolder, articleResponse: ArticleResponse) {
