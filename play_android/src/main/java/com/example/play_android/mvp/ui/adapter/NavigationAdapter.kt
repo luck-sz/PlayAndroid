@@ -12,6 +12,7 @@ import com.example.play_android.app.api.entity.NavigationResponse
 import com.example.play_android.app.api.entity.SystemResponse
 import com.example.play_android.mvp.ui.activity.MainActivity
 import com.example.play_android.mvp.ui.activity.randomColor
+import com.example.play_android.mvp.ui.activity.showToast
 import com.zhy.view.flowlayout.FlowLayout
 import com.zhy.view.flowlayout.TagAdapter
 import com.zhy.view.flowlayout.TagFlowLayout
@@ -37,6 +38,10 @@ class NavigationAdapter(layoutResId: Int, data: MutableList<NavigationResponse>)
                                 flow_tag.setTextColor(randomColor())
                             }
                     }
+                }
+                setOnTagClickListener { view, position, parent ->
+                    mContext.showToast(it.articles[position].title)
+                    false
                 }
             }
         }

@@ -6,39 +6,47 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <android.support.design.widget.AppBarLayout
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_height="match_parent">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar_system"
+        <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:navigationIcon="@drawable/ic_menu_24dp"
-            app:popupTheme="@style/AppTheme.PopupOverlay"
-            app:titleTextAppearance="@style/Toolbar.TitleText" />
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
 
-        <com.flyco.tablayout.SlidingTabLayout
-            android:id="@+id/tab_system"
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar_system"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:navigationIcon="@drawable/ic_menu_24dp"
+                app:popupTheme="@style/AppTheme.PopupOverlay"
+                app:titleTextAppearance="@style/Toolbar.TitleText" />
+
+            <com.flyco.tablayout.SlidingTabLayout
+                android:id="@+id/tab_system"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@color/colorPrimary"
+                app:tl_indicator_color="@color/white"
+                app:tl_tab_space_equal="true"
+                app:tl_indicator_style="TRIANGLE"
+                app:tl_textBold="BOTH"
+                app:tl_textSelectColor="@color/white"
+                app:tl_textUnselectColor="@color/white"
+                app:tl_textsize="14sp" />
+
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vp_content_system"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:background="@color/colorPrimary"
-            app:tl_indicator_color="@color/white"
-            app:tl_tab_space_equal="true"
-            app:tl_indicator_style="TRIANGLE"
-            app:tl_textBold="BOTH"
-            app:tl_textSelectColor="@color/white"
-            app:tl_textUnselectColor="@color/white"
-            app:tl_textsize="14sp" />
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    </android.support.design.widget.AppBarLayout>
+    </android.support.design.widget.CoordinatorLayout>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/vp_content_system"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
 
 </LinearLayout>

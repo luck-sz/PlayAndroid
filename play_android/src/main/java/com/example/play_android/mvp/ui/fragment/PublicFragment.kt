@@ -19,6 +19,7 @@ import com.example.play_android.app.api.entity.ClassifyResponse
 import com.example.play_android.app.base.MySupportFragment
 import com.example.play_android.app.event.OpenDrawer
 import com.example.play_android.mvp.ui.adapter.PublicTabAdapter
+import com.flyco.tablayout.listener.OnTabSelectListener
 import kotlinx.android.synthetic.main.fragment_public.*
 import kotlinx.android.synthetic.main.include_title_tab.*
 import org.simple.eventbus.EventBus
@@ -47,11 +48,11 @@ class PublicFragment : MySupportFragment<PublicPresenter>(), PublicContract.View
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_public, container, false);
+        return inflater.inflate(R.layout.fragment_public, container, false)
     }
 
     override fun initData(savedInstanceState: Bundle?) {
-        toolbar_home_tab.run {
+        toolbar_public_tab.run {
             title = "公众号"
             inflateMenu(R.menu.menu_activity_home)
             setNavigationOnClickListener {
@@ -89,9 +90,11 @@ class PublicFragment : MySupportFragment<PublicPresenter>(), PublicContract.View
     override fun setTabTitle(classIfy: MutableList<ClassifyResponse>) {
         adapter = PublicTabAdapter(childFragmentManager, classIfy)
         vp_content.adapter = adapter
-        tab.run {
+        tab_public.run {
+            setOnClickListener {
+                vp_content.currentItem = tab_public.currentTab
+            }
             setViewPager(vp_content)
-            currentTab = 0
         }
     }
 }

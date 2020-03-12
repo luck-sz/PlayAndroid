@@ -11,6 +11,7 @@ import com.example.play_android.app.api.entity.ClassifyResponse
 import com.example.play_android.app.api.entity.SystemResponse
 import com.example.play_android.mvp.ui.activity.MainActivity
 import com.example.play_android.mvp.ui.activity.randomColor
+import com.example.play_android.mvp.ui.activity.showToast
 import com.zhy.view.flowlayout.FlowLayout
 import com.zhy.view.flowlayout.TagAdapter
 import com.zhy.view.flowlayout.TagFlowLayout
@@ -36,6 +37,10 @@ class SystemAdapter(layoutResId: Int, data: MutableList<SystemResponse>) :
                                 flow_tag.setTextColor(randomColor())
                             }
                     }
+                }
+                setOnTagClickListener { _, position, _ ->
+                    mContext.showToast(it.children[position].name)
+                    false
                 }
             }
         }

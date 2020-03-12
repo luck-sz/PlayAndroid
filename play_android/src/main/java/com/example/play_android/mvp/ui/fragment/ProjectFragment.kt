@@ -2,6 +2,7 @@ package com.example.play_android.mvp.ui.fragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.TabLayout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +21,7 @@ import com.example.play_android.app.base.MySupportFragment
 import com.example.play_android.app.event.OpenDrawer
 import com.example.play_android.mvp.ui.adapter.ProjectTabAdapter
 import com.example.play_android.mvp.ui.adapter.PublicTabAdapter
+import com.flyco.tablayout.listener.OnTabSelectListener
 import kotlinx.android.synthetic.main.fragment_project.*
 import kotlinx.android.synthetic.main.include_title.*
 import kotlinx.android.synthetic.main.include_title_tab.*
@@ -80,7 +82,7 @@ class ProjectFragment : MySupportFragment<ProjectPresenter>(), ProjectContract.V
 
     override fun initData(savedInstanceState: Bundle?) {
         mPresenter?.initTabTitle()
-        toolbar_home_tab.run {
+        toolbar_project_tab.run {
             title = "项目"
             inflateMenu(R.menu.menu_activity_home)
             setNavigationOnClickListener {
@@ -116,9 +118,11 @@ class ProjectFragment : MySupportFragment<ProjectPresenter>(), ProjectContract.V
     override fun setTabTitle(classIfy: MutableList<ClassifyResponse>) {
         adapter = ProjectTabAdapter(childFragmentManager, classIfy)
         vp_content.adapter = adapter
-        tab.run {
+        tab_project.run {
+            setOnClickListener {
+                vp_content.currentItem = tab_project.currentTab
+            }
             setViewPager(vp_content)
-            currentTab = 0
         }
     }
 }
