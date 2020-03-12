@@ -61,4 +61,10 @@ interface ApiService {
      */
     @GET("/tree/json")
     fun getSystemData(): Observable<ApiResponse<MutableList<SystemResponse>>>
+
+    /**
+     * 获取导航标签数据
+     */
+    @GET("/navi/json")
+    fun getNavigationData(): Observable<ApiResponse<MutableList<NavigationResponse>>>
 }

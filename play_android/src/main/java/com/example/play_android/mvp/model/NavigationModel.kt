@@ -1,6 +1,8 @@
 package com.example.play_android.mvp.model
 
 import android.app.Application
+import com.example.play_android.app.api.entity.NavigationResponse
+import com.example.play_android.app.api.service.ApiService
 import com.google.gson.Gson
 import com.jess.arms.integration.IRepositoryManager
 import com.jess.arms.mvp.BaseModel
@@ -9,6 +11,7 @@ import com.jess.arms.di.scope.FragmentScope
 import javax.inject.Inject
 
 import com.example.play_android.mvp.contract.NavigationContract
+import io.reactivex.Observable
 
 
 /**
@@ -29,11 +32,19 @@ class NavigationModel
 constructor(repositoryManager: IRepositoryManager) : BaseModel(repositoryManager),
     NavigationContract.Model {
     @Inject
-    lateinit var mGson: Gson;
+    lateinit var mGson: Gson
     @Inject
-    lateinit var mApplication: Application;
+    lateinit var mApplication: Application
+
+    override fun getNavigationData(): Observable<MutableList<NavigationResponse>> {
+        return mRepositoryManager.obtainRetrofitService(ApiService::class.java)
+            .getNavigationData()
+            .map {
+                it.data
+            }
+    }
 
     override fun onDestroy() {
-        super.onDestroy();
+        super.onDestroy()
     }
 }
