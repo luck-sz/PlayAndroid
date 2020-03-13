@@ -19,6 +19,7 @@ import com.example.play_android.R
 import com.example.play_android.app.api.entity.BannerResponse
 import com.example.play_android.app.base.MySupportFragment
 import com.example.play_android.app.event.OpenDrawer
+import com.example.play_android.mvp.ui.activity.SearchActivity
 import com.example.play_android.mvp.ui.adapter.HomeAdapter
 import com.example.play_android.mvp.ui.view.BannerViewHolder
 import com.zhouwei.mzbanner.MZBannerView
@@ -129,6 +130,10 @@ class HomeFragment : MySupportFragment<HomePresenter>(), HomeContract.View {
             inflateMenu(R.menu.menu_activity_home)
             setNavigationOnClickListener {
                 EventBus.getDefault().post(OpenDrawer(), "OpenDrawer")
+            }
+            setOnMenuItemClickListener {
+                launchActivity(Intent(_mActivity, SearchActivity::class.java))
+                false
             }
         }
         refresh_layout.run {

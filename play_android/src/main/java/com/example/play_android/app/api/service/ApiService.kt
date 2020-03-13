@@ -67,4 +67,10 @@ interface ApiService {
      */
     @GET("/navi/json")
     fun getNavigationData(): Observable<ApiResponse<MutableList<NavigationResponse>>>
+
+    /**
+     * 获取热门搜索数据
+     */
+    @GET("/hotkey/json")
+    fun getSearchData(): Observable<ApiResponse<MutableList<SearchResponse>>>
 }

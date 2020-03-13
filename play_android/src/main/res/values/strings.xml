@@ -67,6 +67,7 @@
     <string name="nav_line_4" translatable="false">----</string>
     <string name="nav_line_2" translatable="false">--</string>
 
+    <string name="title">温馨提示</string>
     <string name="exit_tip">再按一次退出程序</string>
     <string name="share_article_url">%1$s分享【%2$s】：%3$s</string>
     <string name="confirm">确定</string>
