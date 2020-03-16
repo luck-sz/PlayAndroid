@@ -13,6 +13,7 @@ import com.squareup.leakcanary.RefWatcher
 import butterknife.ButterKnife
 
 import com.example.play_android.BuildConfig
+import com.tencent.mmkv.MMKV
 import me.yokeyword.fragmentation.Fragmentation
 
 import timber.log.Timber
@@ -55,6 +56,8 @@ class AppLifecyclesImpl : AppLifecycles {
             .stackViewMode(Fragmentation.NONE)
             .debug(BuildConfig.DEBUG)
             .install()
+        //初始化MMKV
+        MMKV.initialize(application.filesDir.absolutePath + "/mmkv")
 
     }
 

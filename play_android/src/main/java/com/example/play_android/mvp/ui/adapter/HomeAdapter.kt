@@ -5,6 +5,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.example.play_android.R
 import com.example.play_android.app.api.entity.ArticleResponse
+import com.example.play_android.mvp.ui.view.CollectView
 
 class HomeAdapter(layoutResId: Int, data: MutableList<ArticleResponse>) :
     BaseQuickAdapter<ArticleResponse, BaseViewHolder>(layoutResId, data) {
@@ -14,6 +15,7 @@ class HomeAdapter(layoutResId: Int, data: MutableList<ArticleResponse>) :
             helper.setText(R.id.item_home_author, if (author.isNotEmpty()) author else shareUser)
             helper.setText(R.id.item_home_title, Html.fromHtml(title))
             helper.setText(R.id.item_home_type, "$superChapterName·$chapterName")
+            helper.getView<CollectView>(R.id.item_home_collect).isChecked = collect
             // 时间
             helper.setText(R.id.item_home_data, niceDate)
             // 是否显示新标签

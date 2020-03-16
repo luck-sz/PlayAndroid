@@ -19,7 +19,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".mvp.ui.activity.SearchResultActivity"></activity>
+        <activity android:name=".mvp.ui.activity.LoginActivity"></activity>
+        <activity android:name=".mvp.ui.activity.SearchResultActivity" />
         <activity android:name=".mvp.ui.activity.SearchActivity" />
         <activity android:name=".mvp.ui.activity.MainActivity">
             <intent-filter>

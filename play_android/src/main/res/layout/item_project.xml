@@ -94,6 +94,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/item_project_title"
             app:layout_constraintTop_toBottomOf="@+id/item_project_title" />
+
+        <com.example.play_android.mvp.ui.view.CollectView
+            android:id="@+id/item_home_collect"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="12dp"
+            app:layout_constraintBottom_toBottomOf="@+id/item_project_type"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/item_project_type" />
     </android.support.constraint.ConstraintLayout>
 
 </android.support.v7.widget.CardView>
