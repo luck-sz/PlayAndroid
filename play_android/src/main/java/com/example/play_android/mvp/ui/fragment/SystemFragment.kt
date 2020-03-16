@@ -15,6 +15,7 @@ import com.example.play_android.mvp.presenter.SystemPresenter
 import com.example.play_android.R
 import com.example.play_android.app.base.MySupportFragment
 import com.example.play_android.app.event.OpenDrawer
+import com.example.play_android.mvp.ui.activity.SearchActivity
 import com.example.play_android.mvp.ui.adapter.SystemTabAdapter
 import kotlinx.android.synthetic.main.fragment_system.*
 import me.yokeyword.fragmentation.SupportFragment
@@ -55,6 +56,10 @@ class SystemFragment : MySupportFragment<SystemPresenter>(), SystemContract.View
             inflateMenu(R.menu.menu_activity_home)
             setNavigationOnClickListener {
                 EventBus.getDefault().post(OpenDrawer(), "OpenDrawer")
+            }
+            setOnMenuItemClickListener {
+                launchActivity(Intent(_mActivity, SearchActivity::class.java))
+                false
             }
         }
         mPresenter?.setTitle()

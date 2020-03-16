@@ -3,6 +3,7 @@ package com.example.play_android.app.api.service
 import com.example.play_android.app.api.entity.*
 import io.reactivex.Observable
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -73,4 +74,10 @@ interface ApiService {
      */
     @GET("/hotkey/json")
     fun getSearchData(): Observable<ApiResponse<MutableList<SearchResponse>>>
+
+    /**
+     * 根据关键词搜索数据
+     */
+    @POST("/article/query/{page}/json")
+    fun getSearchDataByKey(@Path("page") pageNo: Int, @Query("k") searchKey: String): Observable<ApiResponse<ApiPagerResponse<MutableList<ArticleResponse>>>>
 }

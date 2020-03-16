@@ -185,6 +185,9 @@ class SearchActivity : MySupportActivity<SearchPresenter>(), SearchContract.View
                 }
                 historyData.add(0, hotSearch[position].name)
                 this@SearchActivity.adapter.setNewData(historyData)
+                launchActivity(Intent(this@SearchActivity, SearchResultActivity::class.java).apply {
+                    putExtra("searchKey", hotSearch[position].name)
+                })
                 false
             }
         }

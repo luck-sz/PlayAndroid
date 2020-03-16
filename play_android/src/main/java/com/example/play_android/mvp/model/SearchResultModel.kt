@@ -1,6 +1,8 @@
 package com.example.play_android.mvp.model
 
 import android.app.Application
+import com.example.play_android.app.api.entity.ArticleResponse
+import com.example.play_android.app.api.service.ApiService
 import com.google.gson.Gson
 import com.jess.arms.integration.IRepositoryManager
 import com.jess.arms.mvp.BaseModel
@@ -9,6 +11,7 @@ import com.jess.arms.di.scope.ActivityScope
 import javax.inject.Inject
 
 import com.example.play_android.mvp.contract.SearchResultContract
+import io.reactivex.Observable
 
 
 /**
@@ -29,11 +32,20 @@ class SearchResultModel
 constructor(repositoryManager: IRepositoryManager) : BaseModel(repositoryManager),
     SearchResultContract.Model {
     @Inject
-    lateinit var mGson: Gson;
+    lateinit var mGson: Gson
     @Inject
-    lateinit var mApplication: Application;
+    lateinit var mApplication: Application
+
+    override fun getResult(
+        pageNo: Int,
+        searchKey: String
+    ): Observable<MutableList<ArticleResponse>> {
+        return mRepositoryManager.obtainRetrofitService(ApiService::class.java)
+            .getSearchDataByKey(pageNo, searchKey)
+            .map { it.data.datas }
+    }
 
     override fun onDestroy() {
-        super.onDestroy();
+        super.onDestroy()
     }
 }

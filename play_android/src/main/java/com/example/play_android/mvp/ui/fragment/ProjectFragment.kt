@@ -19,6 +19,7 @@ import com.example.play_android.R
 import com.example.play_android.app.api.entity.ClassifyResponse
 import com.example.play_android.app.base.MySupportFragment
 import com.example.play_android.app.event.OpenDrawer
+import com.example.play_android.mvp.ui.activity.SearchActivity
 import com.example.play_android.mvp.ui.adapter.ProjectTabAdapter
 import com.example.play_android.mvp.ui.adapter.PublicTabAdapter
 import com.flyco.tablayout.listener.OnTabSelectListener
@@ -87,6 +88,10 @@ class ProjectFragment : MySupportFragment<ProjectPresenter>(), ProjectContract.V
             inflateMenu(R.menu.menu_activity_home)
             setNavigationOnClickListener {
                 EventBus.getDefault().post(OpenDrawer(), "OpenDrawer")
+            }
+            setOnMenuItemClickListener {
+                launchActivity(Intent(_mActivity, SearchActivity::class.java))
+                false
             }
         }
     }

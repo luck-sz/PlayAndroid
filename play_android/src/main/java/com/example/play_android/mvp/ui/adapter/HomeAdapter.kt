@@ -1,5 +1,6 @@
 package com.example.play_android.mvp.ui.adapter
 
+import android.text.Html
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.example.play_android.R
@@ -11,7 +12,7 @@ class HomeAdapter(layoutResId: Int, data: MutableList<ArticleResponse>) :
     override fun convert(helper: BaseViewHolder, articleResponse: ArticleResponse) {
         articleResponse.run {
             helper.setText(R.id.item_home_author, if (author.isNotEmpty()) author else shareUser)
-            helper.setText(R.id.item_home_title, title)
+            helper.setText(R.id.item_home_title, Html.fromHtml(title))
             helper.setText(R.id.item_home_type, "$superChapterName·$chapterName")
             // 时间
             helper.setText(R.id.item_home_data, niceDate)
