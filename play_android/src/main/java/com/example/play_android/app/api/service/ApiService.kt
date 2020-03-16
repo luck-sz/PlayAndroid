@@ -64,6 +64,12 @@ interface ApiService {
     fun getSystemData(): Observable<ApiResponse<MutableList<SystemResponse>>>
 
     /**
+     * 知识体系下的文章数据
+     */
+    @GET("/article/list/{page}/json")
+    fun getSystemDataByTree(@Path("page") pageNo: Int, @Query("cid") cid: Int): Observable<ApiResponse<ApiPagerResponse<MutableList<ArticleResponse>>>>
+
+    /**
      * 获取导航标签数据
      */
     @GET("/navi/json")

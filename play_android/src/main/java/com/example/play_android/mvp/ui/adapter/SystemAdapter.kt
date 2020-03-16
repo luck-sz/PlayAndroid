@@ -1,5 +1,7 @@
 package com.example.play_android.mvp.ui.adapter
 
+import android.app.LauncherActivity
+import android.content.Intent
 import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +12,7 @@ import com.example.play_android.app.api.entity.ArticleResponse
 import com.example.play_android.app.api.entity.ClassifyResponse
 import com.example.play_android.app.api.entity.SystemResponse
 import com.example.play_android.mvp.ui.activity.MainActivity
+import com.example.play_android.mvp.ui.activity.TreeInfoActivity
 import com.example.play_android.mvp.ui.activity.randomColor
 import com.example.play_android.mvp.ui.activity.showToast
 import com.zhy.view.flowlayout.FlowLayout
@@ -39,7 +42,10 @@ class SystemAdapter(layoutResId: Int, data: MutableList<SystemResponse>) :
                     }
                 }
                 setOnTagClickListener { _, position, _ ->
-                    mContext.showToast(it.children[position].name)
+                    mContext.startActivity(Intent(mContext, TreeInfoActivity::class.java).apply {
+                        putExtra("position", position)
+                        putExtra("systemBean", it)
+                    })
                     false
                 }
             }
