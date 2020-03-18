@@ -65,7 +65,7 @@ class SearchResultActivity : MySupportActivity<SearchResultPresenter>(), SearchR
 
     override fun initData(savedInstanceState: Bundle?) {
         searchKey = intent.getStringExtra("searchKey")
-        toolbar_home.run {
+        toolbar_base.run {
             title = searchKey
             setNavigationIcon(R.drawable.ic_back)
             setNavigationOnClickListener {

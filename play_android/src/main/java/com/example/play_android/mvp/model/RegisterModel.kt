@@ -1,8 +1,6 @@
 package com.example.play_android.mvp.model
 
 import android.app.Application
-import com.example.play_android.app.api.entity.UserInfoResponse
-import com.example.play_android.app.api.service.ApiService
 import com.google.gson.Gson
 import com.jess.arms.integration.IRepositoryManager
 import com.jess.arms.mvp.BaseModel
@@ -10,15 +8,14 @@ import com.jess.arms.mvp.BaseModel
 import com.jess.arms.di.scope.ActivityScope
 import javax.inject.Inject
 
-import com.example.play_android.mvp.contract.LoginContract
-import io.reactivex.Observable
+import com.example.play_android.mvp.contract.RegisterContract
 
 
 /**
  * ================================================
  * Description:
  * <p>
- * Created by MVPArmsTemplate on 03/16/2020 20:58
+ * Created by MVPArmsTemplate on 03/17/2020 17:10
  * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
  * <a href="https://github.com/JessYanCoding">Follow me</a>
  * <a href="https://github.com/JessYanCoding/MVPArms">Star me</a>
@@ -27,24 +24,16 @@ import io.reactivex.Observable
  * ================================================
  */
 @ActivityScope
-class LoginModel
+class RegisterModel
 @Inject
 constructor(repositoryManager: IRepositoryManager) : BaseModel(repositoryManager),
-    LoginContract.Model {
+    RegisterContract.Model {
     @Inject
-    lateinit var mGson: Gson
+    lateinit var mGson: Gson;
     @Inject
-    lateinit var mApplication: Application
-
-    override fun login(username: String, password: String): Observable<UserInfoResponse> {
-        return mRepositoryManager.obtainRetrofitService(ApiService::class.java)
-            .login(username,password)
-            .map {
-                it.data
-            }
-    }
+    lateinit var mApplication: Application;
 
     override fun onDestroy() {
-        super.onDestroy()
+        super.onDestroy();
     }
 }

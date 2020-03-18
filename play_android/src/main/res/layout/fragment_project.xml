@@ -30,7 +30,7 @@
                 android:layout_height="48dp"
                 android:background="@color/colorPrimary"
                 app:tl_indicator_color="@color/white"
-                app:tl_indicator_style="TRIANGLE"
+                app:tl_indicator_style="NORMAL"
                 app:tl_textBold="BOTH"
                 app:tl_textSelectColor="@color/white"
                 app:tl_textUnselectColor="@color/white"

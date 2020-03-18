@@ -21,6 +21,7 @@
             android:layout_marginRight="18dp"
             android:orientation="vertical">
 
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -37,14 +38,13 @@
                 android:orientation="horizontal">
 
                 <EditText
-                    android:id="@+id/login_username"
+                    android:id="@+id/register_username"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@null"
                     android:hint="账号"
                     android:inputType="text"
-                    android:text="1037055363@qq.co"
                     android:lines="1"
                     android:maxLength="16"
                     android:paddingLeft="12dp"
@@ -53,7 +53,7 @@
                     android:textSize="15dp" />
 
                 <ImageView
-                    android:id="@+id/login_clear"
+                    android:id="@+id/register_clear"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginRight="6dp"
@@ -70,13 +70,12 @@
                 android:orientation="horizontal">
 
                 <EditText
-                    android:id="@+id/login_pwd"
+                    android:id="@+id/register_pwd"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@null"
                     android:hint="密码"
-                    android:text="qindewen08291997"
                     android:inputType="textPassword"
                     android:lines="1"
                     android:paddingLeft="12dp"
@@ -85,7 +84,39 @@
                     android:textSize="15dp" />
 
                 <CheckBox
-                    android:id="@+id/login_key"
+                    android:id="@+id/register_key"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginRight="6dp"
+                    android:button="@drawable/keyvisibily_selector"
+                    android:checked="false"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/edit_shap"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/register_pwd1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:hint="确认密码"
+                    android:inputType="textPassword"
+                    android:lines="1"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:textColor="#000"
+                    android:textSize="15dp" />
+
+                <CheckBox
+                    android:id="@+id/register_key1"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginRight="6dp"
@@ -95,29 +126,17 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/login_sub"
+                android:id="@+id/register_sub"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginTop="30dp"
                 android:layout_marginBottom="12dp"
                 android:background="@drawable/button_shap"
                 android:gravity="center"
-                android:text="登录"
+                android:text="注册"
                 android:textColor="@color/white"
                 android:textSize="16dp" />
 
-            <TextView
-                android:id="@+id/login_go_register"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginBottom="12dp"
-                android:paddingLeft="18dp"
-                android:paddingBottom="18dp"
-                android:paddingTop="18dp"
-                android:text="去注册"
-                android:textColor="@color/colorPrimary"
-                android:textSize="15dp" />
         </LinearLayout>
     </ScrollView>
 

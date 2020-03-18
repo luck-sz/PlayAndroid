@@ -2,12 +2,16 @@ package com.example.play_android.app.api.service
 
 import com.example.play_android.app.api.entity.*
 import io.reactivex.Observable
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface ApiService {
+
+    /**
+     * 登录
+     */
+    @FormUrlEncoded
+    @POST("/user/login")
+    fun login(@Field("username") username: String, @Field("password") pwd: String): Observable<ApiResponse<UserInfoResponse>>
 
     /**
      * 获取首页Banner轮播图

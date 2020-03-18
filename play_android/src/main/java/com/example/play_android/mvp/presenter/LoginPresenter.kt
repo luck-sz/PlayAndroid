@@ -1,6 +1,8 @@
 package com.example.play_android.mvp.presenter
 
 import android.app.Application
+import com.example.play_android.app.ResponseErrorListenerImpl
+import com.example.play_android.app.api.entity.UserInfoResponse
 
 import com.jess.arms.integration.AppManager
 import com.jess.arms.di.scope.ActivityScope
@@ -10,6 +12,10 @@ import me.jessyan.rxerrorhandler.core.RxErrorHandler
 import javax.inject.Inject
 
 import com.example.play_android.mvp.contract.LoginContract
+import com.jess.arms.utils.RxLifecycleUtils
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber
 
 
 /**
@@ -38,8 +44,24 @@ constructor(model: LoginContract.Model, rootView: LoginContract.View) :
     @Inject
     lateinit var mAppManager: AppManager
 
+    fun login(username: String, password: String) {
+        mModel.login(username, password)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+            .subscribe(object : ErrorHandleSubscriber<UserInfoResponse>(mErrorHandler) {
+                override fun onNext(userInfo: UserInfoResponse) {
+                    mRootView.loginSuccess(userInfo)
+                }
+
+                override fun onError(t: Throwable) {
+                    super.onError(t)
+                    mRootView.loginFail()
+                }
+            })
+    }
 
     override fun onDestroy() {
-        super.onDestroy();
+        super.onDestroy()
     }
 }

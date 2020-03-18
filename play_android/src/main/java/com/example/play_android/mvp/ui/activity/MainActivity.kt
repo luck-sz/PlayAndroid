@@ -21,6 +21,8 @@ import com.example.play_android.mvp.presenter.MainPresenter
 import com.example.play_android.R
 import com.example.play_android.app.base.MySupportActivity
 import com.example.play_android.app.event.OpenDrawer
+import com.example.play_android.app.utils.CacheUtil
+import com.example.play_android.mvp.ui.adapter.HomeAdapter
 import com.example.play_android.mvp.ui.fragment.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
@@ -73,6 +75,10 @@ class MainActivity : MySupportActivity<MainPresenter>(), MainContract.View {
         initFragment()
         initDrawerLayout()
         initBottomNav()
+        // 没有登录时不显示退出登录
+        if (!CacheUtil.isLogin()) {
+            nav_view.menu.findItem(R.id.nav_logout).isVisible = false
+        }
     }
 
 
@@ -120,7 +126,7 @@ class MainActivity : MySupportActivity<MainPresenter>(), MainContract.View {
             val toggle = ActionBarDrawerToggle(
                 this@MainActivity,
                 this,
-                toolbar_home
+                toolbar_base
                 , R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close
             )

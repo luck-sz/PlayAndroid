@@ -1,10 +1,12 @@
 package com.example.play_android.mvp.ui.fragment
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.os.Message
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,6 +27,7 @@ import com.example.play_android.mvp.ui.adapter.HomeAdapter
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.refresh_layout
 import kotlinx.android.synthetic.main.fragment_square.*
+import kotlinx.android.synthetic.main.include_float_btn.*
 import kotlinx.android.synthetic.main.include_title.*
 import org.simple.eventbus.EventBus
 
@@ -82,7 +85,7 @@ class SquareFragment : MySupportFragment<SquarePresenter>(), SquareContract.View
     }
 
     override fun initData(savedInstanceState: Bundle?) {
-        toolbar_home.run {
+        toolbar_base.run {
             title = "广场"
             inflateMenu(R.menu.menu_activity_square)
             setNavigationOnClickListener {
@@ -92,6 +95,18 @@ class SquareFragment : MySupportFragment<SquarePresenter>(), SquareContract.View
         refresh_layout.run {
             setOnRefreshListener {
                 mPresenter?.initAdapter(0)
+            }
+        }
+        btn_float.run {
+            setOnClickListener {
+                val layoutManager = rv_square.layoutManager as LinearLayoutManager
+                //如果当前recycleView 最后一个视图位置的索引大于等于40，则迅速返回顶部，否则带有滚动动画效果返回到顶部
+                if (layoutManager.findLastVisibleItemPosition() >= 40) {
+                    rv_square.scrollToPosition(0)//没有动画迅速返回到顶部(马上)
+                } else {
+                    rv_square.smoothScrollToPosition(0)//有滚动动画返回到顶部(有点慢)
+                }
+                it.visibility = View.INVISIBLE
             }
         }
         mPresenter?.initAdapter(0)
@@ -125,6 +140,15 @@ class SquareFragment : MySupportFragment<SquarePresenter>(), SquareContract.View
         rv_square.run {
             layoutManager = LinearLayoutManager(_mActivity)
             adapter = homeAdapter
+            // 监听recycleView滑动到顶部时隐藏floatButton
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                @SuppressLint("RestrictedApi")
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    if (!canScrollVertically(-1)) {
+                        btn_float.visibility = View.INVISIBLE
+                    }
+                }
+            })
         }
     }
 }
