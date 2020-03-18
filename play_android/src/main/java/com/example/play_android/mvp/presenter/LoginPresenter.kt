@@ -2,6 +2,7 @@ package com.example.play_android.mvp.presenter
 
 import android.app.Application
 import com.example.play_android.app.ResponseErrorListenerImpl
+import com.example.play_android.app.api.entity.ApiResponse
 import com.example.play_android.app.api.entity.UserInfoResponse
 
 import com.jess.arms.integration.AppManager
@@ -16,6 +17,7 @@ import com.jess.arms.utils.RxLifecycleUtils
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber
+import java.lang.Exception
 
 
 /**
@@ -49,16 +51,39 @@ constructor(model: LoginContract.Model, rootView: LoginContract.View) :
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
-            .subscribe(object : ErrorHandleSubscriber<UserInfoResponse>(mErrorHandler) {
-                override fun onNext(userInfo: UserInfoResponse) {
-                    mRootView.loginSuccess(userInfo)
-                }
-
-                override fun onError(t: Throwable) {
-                    super.onError(t)
-                    mRootView.loginFail()
+            .subscribe(object :
+                ErrorHandleSubscriber<ApiResponse<UserInfoResponse>>(mErrorHandler) {
+                override fun onNext(response: ApiResponse<UserInfoResponse>) {
+                    mRootView.onSuccess(response.data)
                 }
             })
+    }
+
+    fun register(username: String, password: String, password1: String) {
+        mModel.register(username, password, password1)
+            .subscribeOn(Schedulers.io())
+            .flatMap {
+                //转换，如果注册成功，直接调起登录，失败则跑出异常
+                if (it.errorCode != -1) {
+                    mModel.login(username, password)
+                } else {
+                    throw Exception(it.errorMsg)
+                }
+            }
+            .subscribeOn(AndroidSchedulers.mainThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+            .subscribe(object :
+                ErrorHandleSubscriber<ApiResponse<UserInfoResponse>>(mErrorHandler) {
+                override fun onNext(response: ApiResponse<UserInfoResponse>) {
+                    if (response.errorCode != -1) {
+                        mRootView.onSuccess(response.data)
+                    } else {
+                        mRootView.showMessage(response.errorMsg)
+                    }
+                }
+            })
+
     }
 
     override fun onDestroy() {

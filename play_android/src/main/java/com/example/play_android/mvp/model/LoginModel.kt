@@ -1,6 +1,7 @@
 package com.example.play_android.mvp.model
 
 import android.app.Application
+import com.example.play_android.app.api.entity.ApiResponse
 import com.example.play_android.app.api.entity.UserInfoResponse
 import com.example.play_android.app.api.service.ApiService
 import com.google.gson.Gson
@@ -36,12 +37,19 @@ constructor(repositoryManager: IRepositoryManager) : BaseModel(repositoryManager
     @Inject
     lateinit var mApplication: Application
 
-    override fun login(username: String, password: String): Observable<UserInfoResponse> {
+    override fun login(username: String, password: String): Observable<ApiResponse<UserInfoResponse>> {
         return mRepositoryManager.obtainRetrofitService(ApiService::class.java)
-            .login(username,password)
-            .map {
-                it.data
-            }
+            .login(username, password)
+
+    }
+
+    override fun register(
+        username: String,
+        password: String,
+        password1: String
+    ): Observable<ApiResponse<Any>> {
+        return mRepositoryManager.obtainRetrofitService(ApiService::class.java)
+            .register(username, password, password1)
     }
 
     override fun onDestroy() {

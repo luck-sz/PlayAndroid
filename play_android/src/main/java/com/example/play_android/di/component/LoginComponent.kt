@@ -7,6 +7,7 @@ import com.example.play_android.di.module.LoginModule
 
 import com.jess.arms.di.scope.ActivityScope
 import com.example.play_android.mvp.ui.activity.LoginActivity
+import com.example.play_android.mvp.ui.activity.RegisterActivity
 
 
 /**
@@ -25,4 +26,5 @@ import com.example.play_android.mvp.ui.activity.LoginActivity
 @Component(modules = arrayOf(LoginModule::class), dependencies = arrayOf(AppComponent::class))
 interface LoginComponent {
     fun inject(activity: LoginActivity)
+    fun inject1(activity: RegisterActivity)
 }

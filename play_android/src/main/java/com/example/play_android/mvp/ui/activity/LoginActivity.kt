@@ -27,7 +27,7 @@ class LoginActivity : MySupportActivity<LoginPresenter>(), LoginContract.View {
 
     override fun setupActivityComponent(appComponent: AppComponent) {
         DaggerLoginComponent //如找不到该类,请编译一下项目
-            .builder()
+                .builder()
             .appComponent(appComponent)
             .loginModule(LoginModule(this))
             .build()
@@ -129,12 +129,8 @@ class LoginActivity : MySupportActivity<LoginPresenter>(), LoginContract.View {
         finish()
     }
 
-    override fun loginSuccess(userInfo: UserInfoResponse) {
+    override fun onSuccess(userInfo: UserInfoResponse) {
         showToast("登录成功...")
         finish()
-    }
-
-    override fun loginFail() {
-        showToast("登录失败...")
     }
 }
