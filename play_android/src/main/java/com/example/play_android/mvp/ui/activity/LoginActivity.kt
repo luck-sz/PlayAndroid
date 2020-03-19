@@ -19,8 +19,10 @@ import com.example.play_android.mvp.presenter.LoginPresenter
 import com.example.play_android.R
 import com.example.play_android.app.api.entity.UserInfoResponse
 import com.example.play_android.app.base.MySupportActivity
+import com.example.play_android.app.utils.CacheUtil
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.include_title.*
+import org.simple.eventbus.EventBus
 
 
 class LoginActivity : MySupportActivity<LoginPresenter>(), LoginContract.View {
@@ -130,7 +132,9 @@ class LoginActivity : MySupportActivity<LoginPresenter>(), LoginContract.View {
     }
 
     override fun onSuccess(userInfo: UserInfoResponse) {
+        CacheUtil.setUser(userInfo)//保存账户信息
         showToast("登录成功...")
+        EventBus.getDefault().post(userInfo, "LoginSuccess")
         finish()
     }
 }

@@ -13,12 +13,15 @@ import com.jess.arms.utils.ArmsUtils
 import com.example.play_android.R
 import com.example.play_android.app.api.entity.UserInfoResponse
 import com.example.play_android.app.base.MySupportActivity
+import com.example.play_android.app.utils.CacheUtil
 import com.example.play_android.di.component.DaggerLoginComponent
 import com.example.play_android.di.module.LoginModule
 import com.example.play_android.mvp.contract.LoginContract
 import com.example.play_android.mvp.presenter.LoginPresenter
+import com.jess.arms.integration.AppManager
 import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.include_title.*
+import org.simple.eventbus.EventBus
 
 class RegisterActivity : MySupportActivity<LoginPresenter>(), LoginContract.View {
 
@@ -147,6 +150,10 @@ class RegisterActivity : MySupportActivity<LoginPresenter>(), LoginContract.View
     }
 
     override fun onSuccess(userInfo: UserInfoResponse) {
+        showToast("登录成功...")
+        CacheUtil.setUser(userInfo)//保存账户信息
+        AppManager.getAppManager().killActivity(LoginActivity::class.java)
+        EventBus.getDefault().post(userInfo, "LoginSuccess")
         finish()
     }
 }

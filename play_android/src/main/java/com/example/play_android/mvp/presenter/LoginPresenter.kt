@@ -67,7 +67,8 @@ constructor(model: LoginContract.Model, rootView: LoginContract.View) :
                 if (it.errorCode != -1) {
                     mModel.login(username, password)
                 } else {
-                    throw Exception(it.errorMsg)
+                    mRootView.showMessage(it.errorMsg)
+                    throw Exception()
                 }
             }
             .subscribeOn(AndroidSchedulers.mainThread())

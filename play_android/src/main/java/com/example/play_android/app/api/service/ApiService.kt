@@ -21,6 +21,12 @@ interface ApiService {
     fun register(@Field("username") username: String, @Field("password") pwd: String, @Field("repassword") rpwd: String): Observable<ApiResponse<Any>>
 
     /**
+     * 获取当前账户的个人积分
+     */
+    @GET("/lg/coin/userinfo/json")
+    fun getIntegral(): Observable<ApiResponse<IntegralResponse>>
+
+    /**
      * 获取首页Banner轮播图
      */
     @GET("/banner/json")

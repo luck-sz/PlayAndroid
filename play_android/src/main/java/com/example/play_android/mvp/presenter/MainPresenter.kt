@@ -1,6 +1,8 @@
 package com.example.play_android.mvp.presenter
 
 import android.app.Application
+import com.example.play_android.app.api.entity.ApiResponse
+import com.example.play_android.app.api.entity.IntegralResponse
 
 import com.jess.arms.integration.AppManager
 import com.jess.arms.di.scope.ActivityScope
@@ -10,6 +12,10 @@ import me.jessyan.rxerrorhandler.core.RxErrorHandler
 import javax.inject.Inject
 
 import com.example.play_android.mvp.contract.MainContract
+import com.jess.arms.utils.RxLifecycleUtils
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber
 
 
 /**
@@ -38,8 +44,24 @@ constructor(model: MainContract.Model, rootView: MainContract.View) :
     @Inject
     lateinit var mAppManager: AppManager
 
+    fun getIntegral() {
+        mModel.getIntegral()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+            .subscribe(object :
+                ErrorHandleSubscriber<ApiResponse<IntegralResponse>>(mErrorHandler) {
+                override fun onNext(response: ApiResponse<IntegralResponse>) {
+                    if (response.isSucces()){
+                        mRootView.showUserInfo(response.data)
+                    }else{
+                        mRootView.showMessage(response.errorMsg)
+                    }
+                }
+            })
+    }
 
     override fun onDestroy() {
-        super.onDestroy();
+        super.onDestroy()
     }
 }
