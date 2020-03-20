@@ -1,5 +1,6 @@
 package com.example.play_android.mvp.contract
 
+import com.example.play_android.app.api.entity.ApiPagerResponse
 import com.example.play_android.app.api.entity.ArticleResponse
 import com.example.play_android.mvp.ui.adapter.HomeAdapter
 import com.jess.arms.mvp.IView
@@ -29,7 +30,7 @@ interface PublicChildContract {
     //Model层定义接口,外部只需关心Model返回的数据,无需关心内部细节,即是否使用缓存
     interface Model : IModel {
         // 获取公众号文章数据
-        fun getPublicData(pageNo: Int, id: Int): Observable<MutableList<ArticleResponse>>
+        fun getPublicData(pageNo: Int, id: Int): Observable<ApiPagerResponse<MutableList<ArticleResponse>>>
     }
 
 }

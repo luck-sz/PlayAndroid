@@ -2,6 +2,7 @@ package com.example.play_android.mvp.presenter
 
 import android.app.Application
 import com.example.play_android.R
+import com.example.play_android.app.api.entity.ApiPagerResponse
 import com.example.play_android.app.api.entity.ArticleResponse
 import com.example.play_android.app.api.entity.ClassifyResponse
 
@@ -58,23 +59,36 @@ constructor(model: TreeInfoContract.Model, rootView: TreeInfoContract.View) :
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe {
-                mRootView.showLoading()
+                if (pageNo == 0) {
+                    mRootView.showLoading()
+                }
             }
             .doFinally {
                 mRootView.hideLoading()
             }
             .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
-            .subscribe(object : ErrorHandleSubscriber<MutableList<ArticleResponse>>(mErrorHandler) {
-                override fun onNext(data: MutableList<ArticleResponse>) {
+            .subscribe(object :
+                ErrorHandleSubscriber<ApiPagerResponse<MutableList<ArticleResponse>>>(mErrorHandler) {
+                override fun onNext(data: ApiPagerResponse<MutableList<ArticleResponse>>) {
                     if (homeAdapter == null) {
-                        homeAdapter = HomeAdapter(R.layout.item_article, data)
+                        homeAdapter = HomeAdapter(R.layout.item_article, data.datas)
+                        homeAdapter!!.setEnableLoadMore(true)
+                        mRootView.setContent(homeAdapter!!)
                     }
-                    // 刷新
-                    homeAdapter!!.setNewData(data)
-                    mRootView.setContent(homeAdapter!!)
                     homeAdapter?.run {
+                        if (data.over) {
+                            loadMoreEnd()
+                        } else {
+                            if (pageNo == 0) {
+                                // 刷新
+                                setNewData(data.datas)
+                            } else {
+                                addData(data.datas)
+                                loadMoreComplete()
+                            }
+                        }
                         setOnItemClickListener { _, _, position ->
-                            mApplication.showToast(data[position].title)
+                            mApplication.showToast(data.datas[position].title)
                         }
                     }
                 }

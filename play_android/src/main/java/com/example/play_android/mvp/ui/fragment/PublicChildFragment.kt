@@ -38,6 +38,7 @@ class PublicChildFragment : MySupportFragment<PublicChildPresenter>(), PublicChi
     }
 
     private var cid: Int = 0
+    private var pageNo: Int = 0
 
     override fun setupFragmentComponent(appComponent: AppComponent) {
         DaggerPublicChildComponent //如找不到该类,请编译一下项目
@@ -58,10 +59,11 @@ class PublicChildFragment : MySupportFragment<PublicChildPresenter>(), PublicChi
 
     override fun initData(savedInstanceState: Bundle?) {
         cid = arguments?.getInt("cid") ?: 0
-        mPresenter?.getPublicData(0, cid)
+        mPresenter?.getPublicData(pageNo, cid)
         refresh_layout.run {
             setOnRefreshListener {
-                mPresenter?.getPublicData(0, id = cid)
+                pageNo = 1
+                mPresenter?.getPublicData(pageNo, cid)
             }
         }
     }
@@ -95,5 +97,9 @@ class PublicChildFragment : MySupportFragment<PublicChildPresenter>(), PublicChi
             layoutManager = LinearLayoutManager(_mActivity)
             adapter = homeAdapter
         }
+        homeAdapter.setOnLoadMoreListener({
+            pageNo++
+            mPresenter?.getPublicData(pageNo, cid)
+        }, rv_public)
     }
 }

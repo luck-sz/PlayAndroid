@@ -1,7 +1,9 @@
 package com.example.play_android.mvp.presenter
 
 import android.app.Application
+import com.chad.library.adapter.base.BaseQuickAdapter
 import com.example.play_android.R
+import com.example.play_android.app.api.entity.ApiPagerResponse
 import com.example.play_android.app.api.entity.ArticleResponse
 
 import com.jess.arms.integration.AppManager
@@ -37,6 +39,7 @@ class ProjectChildPresenter
 @Inject
 constructor(model: ProjectChildContract.Model, rootView: ProjectChildContract.View) :
     BasePresenter<ProjectChildContract.Model, ProjectChildContract.View>(model, rootView) {
+
     @Inject
     lateinit var mErrorHandler: RxErrorHandler
     @Inject
@@ -53,23 +56,35 @@ constructor(model: ProjectChildContract.Model, rootView: ProjectChildContract.Vi
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe {
-                mRootView.showLoading()
+                if (pageNo == 1) {
+                    mRootView.showLoading()
+                }
             }
             .doFinally {
                 mRootView.hideLoading()
             }
             .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
-            .subscribe(object : ErrorHandleSubscriber<MutableList<ArticleResponse>>(mErrorHandler) {
-                override fun onNext(data: MutableList<ArticleResponse>) {
+            .subscribe(object :
+                ErrorHandleSubscriber<ApiPagerResponse<MutableList<ArticleResponse>>>(mErrorHandler) {
+                override fun onNext(data: ApiPagerResponse<MutableList<ArticleResponse>>) {
                     if (projectAdapter == null) {
-                        projectAdapter = ProjectAdapter(R.layout.item_project, data)
+                        projectAdapter = ProjectAdapter(R.layout.item_project, data.datas)
+                        projectAdapter!!.setEnableLoadMore(true)
+                        mRootView.setContent(projectAdapter!!)
                     }
-                    // 刷新
-                    projectAdapter!!.setNewData(data)
-                    mRootView.setContent(projectAdapter!!)
                     projectAdapter?.run {
+                        if (data.over) {
+                            loadMoreEnd()
+                        } else {
+                            if (pageNo == 1) {
+                                setNewData(data.datas)
+                            } else {
+                                addData(data.datas)
+                                loadMoreComplete()
+                            }
+                        }
                         setOnItemClickListener { _, _, position ->
-                            mApplication.showToast(data[position].title)
+                            mApplication.showToast(data.datas[position].title)
                         }
                     }
                 }

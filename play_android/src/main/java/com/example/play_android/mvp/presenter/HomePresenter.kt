@@ -75,7 +75,7 @@ constructor(model: HomeContract.Model, rootView: HomeContract.View) :
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe {
-                mRootView.showLoading()
+                if (pageNo == 0) mRootView.showLoading()
             }
             .doFinally {
                 mRootView.hideLoading()
@@ -85,12 +85,19 @@ constructor(model: HomeContract.Model, rootView: HomeContract.View) :
                 override fun onNext(data: MutableList<ArticleResponse>) {
                     if (homeAdapter == null) {
                         homeAdapter = HomeAdapter(R.layout.item_article, data)
+                        homeAdapter!!.setEnableLoadMore(true)
                         mRootView.addBanner(homeAdapter!!)
+                        mRootView.setContent(homeAdapter!!)
                     }
-                    // 刷新
-                    homeAdapter!!.setNewData(data)
-                    mRootView.setContent(homeAdapter!!)
+
                     homeAdapter?.run {
+                        if (pageNo == 0) {
+                            // 刷新
+                            setNewData(data)
+                        } else {
+                            addData(data)
+                            loadMoreComplete()
+                        }
                         setOnItemClickListener { _, _, position ->
                             mApplication.showToast(data[position].title)
                         }

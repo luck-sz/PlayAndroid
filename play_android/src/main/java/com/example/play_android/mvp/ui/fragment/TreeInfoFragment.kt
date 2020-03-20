@@ -36,6 +36,7 @@ class TreeInfoFragment : MySupportFragment<TreeInfoPresenter>(), TreeInfoContrac
     }
 
     private var cid: Int = 0
+    private var pageNo: Int = 0
 
     override fun setupFragmentComponent(appComponent: AppComponent) {
         DaggerTreeInfoComponent //如找不到该类,请编译一下项目
@@ -56,10 +57,11 @@ class TreeInfoFragment : MySupportFragment<TreeInfoPresenter>(), TreeInfoContrac
 
     override fun initData(savedInstanceState: Bundle?) {
         cid = arguments?.getInt("cid") ?: 0
-        mPresenter?.setContent(0, cid)
+        mPresenter?.setContent(pageNo, cid)
         refresh_layout_tree_info.run {
             setOnRefreshListener {
-                mPresenter?.setContent(0, cid)
+                pageNo = 0
+                mPresenter?.setContent(pageNo, cid)
             }
         }
     }
@@ -97,5 +99,9 @@ class TreeInfoFragment : MySupportFragment<TreeInfoPresenter>(), TreeInfoContrac
             layoutManager = LinearLayoutManager(_mActivity)
             adapter = homeAdapter
         }
+        homeAdapter.setOnLoadMoreListener({
+            pageNo++
+            mPresenter?.setContent(pageNo, cid)
+        }, rv_tree_info)
     }
 }

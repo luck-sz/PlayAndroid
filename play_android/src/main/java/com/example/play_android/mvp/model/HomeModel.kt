@@ -56,11 +56,15 @@ constructor(repositoryManager: IRepositoryManager) : BaseModel(repositoryManager
             mRepositoryManager.obtainRetrofitService(ApiService::class.java)
                 .getArticleList(pageNo)
                 .map { it.data.datas }
-        // 合并数据
-        return Observable.zip(mTopArticle, mArticle, BiFunction { list1, list2 ->
-            list1.addAll(list2)
-            list1
-        })
+        return if (pageNo == 0) {
+            // 合并数据
+            Observable.zip(mTopArticle, mArticle, BiFunction { list1, list2 ->
+                list1.addAll(list2)
+                list1
+            })
+        } else {
+            mArticle
+        }
     }
 
     override fun onDestroy() {

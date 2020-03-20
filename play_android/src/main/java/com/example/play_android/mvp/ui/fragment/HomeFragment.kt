@@ -43,6 +43,8 @@ class HomeFragment : MySupportFragment<HomePresenter>(), HomeContract.View {
         }
     }
 
+    private var pageNo: Int = 0
+
     override fun setupFragmentComponent(appComponent: AppComponent) {
         DaggerHomeComponent //如找不到该类,请编译一下项目
             .builder()
@@ -63,7 +65,7 @@ class HomeFragment : MySupportFragment<HomePresenter>(), HomeContract.View {
     override fun initData(savedInstanceState: Bundle?) {
         initView()
         mPresenter?.initBanner()
-        mPresenter?.getHomePage(0)
+        mPresenter?.getHomePage(pageNo)
     }
 
     override fun setData(data: Any?) {
@@ -132,6 +134,10 @@ class HomeFragment : MySupportFragment<HomePresenter>(), HomeContract.View {
                 }
             })
         }
+        homeAdapter.setOnLoadMoreListener({
+            pageNo++
+            mPresenter?.getHomePage(pageNo)
+        }, rv_home)
     }
 
     private fun initView() {
@@ -162,8 +168,9 @@ class HomeFragment : MySupportFragment<HomePresenter>(), HomeContract.View {
         }
         refresh_layout.run {
             setOnRefreshListener {
+                pageNo = 0
                 mPresenter?.initBanner()
-                mPresenter?.getHomePage(0)
+                mPresenter?.getHomePage(pageNo)
             }
         }
 

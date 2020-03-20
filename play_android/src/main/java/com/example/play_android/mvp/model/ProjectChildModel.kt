@@ -1,6 +1,7 @@
 package com.example.play_android.mvp.model
 
 import android.app.Application
+import com.example.play_android.app.api.entity.ApiPagerResponse
 import com.example.play_android.app.api.entity.ArticleResponse
 import com.example.play_android.app.api.service.ApiService
 import com.google.gson.Gson
@@ -36,11 +37,14 @@ constructor(repositoryManager: IRepositoryManager) : BaseModel(repositoryManager
     @Inject
     lateinit var mApplication: Application
 
-    override fun getProjectByType(pageNo: Int, cid: Int): Observable<MutableList<ArticleResponse>> {
+    override fun getProjectByType(
+        pageNo: Int,
+        cid: Int
+    ): Observable<ApiPagerResponse<MutableList<ArticleResponse>>> {
         return mRepositoryManager.obtainRetrofitService(ApiService::class.java)
             .getProjectDataByType(pageNo, cid)
             .map {
-                it.data.datas
+                it.data
             }
     }
 

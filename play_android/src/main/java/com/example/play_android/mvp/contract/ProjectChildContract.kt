@@ -1,5 +1,6 @@
 package com.example.play_android.mvp.contract
 
+import com.example.play_android.app.api.entity.ApiPagerResponse
 import com.example.play_android.app.api.entity.ArticleResponse
 import com.example.play_android.mvp.ui.adapter.HomeAdapter
 import com.example.play_android.mvp.ui.adapter.ProjectAdapter
@@ -30,7 +31,7 @@ interface ProjectChildContract {
     //Model层定义接口,外部只需关心Model返回的数据,无需关心内部细节,即是否使用缓存
     interface Model : IModel {
         // 通过id获取项目列表
-        fun getProjectByType(pageNo: Int, cid: Int): Observable<MutableList<ArticleResponse>>
+        fun getProjectByType(pageNo: Int, cid: Int): Observable<ApiPagerResponse<MutableList<ArticleResponse>>>
     }
 
 }

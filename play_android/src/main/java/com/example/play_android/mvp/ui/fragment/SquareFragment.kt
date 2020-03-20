@@ -31,32 +31,6 @@ import kotlinx.android.synthetic.main.include_float_btn.*
 import kotlinx.android.synthetic.main.include_title.*
 import org.simple.eventbus.EventBus
 
-
-/**
- * ================================================
- * Description:
- * <p>
- * Created by MVPArmsTemplate on 02/11/2020 20:45
- * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
- * <a href="https://github.com/JessYanCoding">Follow me</a>
- * <a href="https://github.com/JessYanCoding/MVPArms">Star me</a>
- * <a href="https://github.com/JessYanCoding/MVPArms/wiki">See me</a>
- * <a href="https://github.com/JessYanCoding/MVPArmsTemplate">模版请保持更新</a>
- * ================================================
- */
-/**
- * 如果没presenter
- * 你可以这样写
- *
- * @FragmentScope(請注意命名空間) class NullObjectPresenterByFragment
- * @Inject constructor() : IPresenter {
- * override fun onStart() {
- * }
- *
- * override fun onDestroy() {
- * }
- * }
- */
 class SquareFragment : MySupportFragment<SquarePresenter>(), SquareContract.View {
 
     companion object {
@@ -66,6 +40,7 @@ class SquareFragment : MySupportFragment<SquarePresenter>(), SquareContract.View
         }
     }
 
+    private var pageNo: Int = 0
 
     override fun setupFragmentComponent(appComponent: AppComponent) {
         DaggerSquareComponent //如找不到该类,请编译一下项目
@@ -94,7 +69,8 @@ class SquareFragment : MySupportFragment<SquarePresenter>(), SquareContract.View
         }
         refresh_layout.run {
             setOnRefreshListener {
-                mPresenter?.initAdapter(0)
+                pageNo = 0
+                mPresenter?.initAdapter(pageNo)
             }
         }
         btn_float.run {
@@ -109,7 +85,7 @@ class SquareFragment : MySupportFragment<SquarePresenter>(), SquareContract.View
                 it.visibility = View.INVISIBLE
             }
         }
-        mPresenter?.initAdapter(0)
+        mPresenter?.initAdapter(pageNo)
     }
 
     override fun setData(data: Any?) {
@@ -150,5 +126,9 @@ class SquareFragment : MySupportFragment<SquarePresenter>(), SquareContract.View
                 }
             })
         }
+        homeAdapter.setOnLoadMoreListener({
+            pageNo ++
+            mPresenter?.initAdapter(pageNo)
+        }, rv_square)
     }
 }

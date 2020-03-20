@@ -37,6 +37,7 @@ class ProjectChildFragment : MySupportFragment<ProjectChildPresenter>(), Project
     }
 
     private var cid: Int = 0
+    private var pageNo: Int = 1
 
     override fun setupFragmentComponent(appComponent: AppComponent) {
         DaggerProjectChildComponent //如找不到该类,请编译一下项目
@@ -57,10 +58,11 @@ class ProjectChildFragment : MySupportFragment<ProjectChildPresenter>(), Project
 
     override fun initData(savedInstanceState: Bundle?) {
         cid = arguments?.getInt("cid") ?: 0
-        mPresenter?.getProjectData(0, cid)
+        mPresenter?.getProjectData(pageNo, cid)
         refresh_layout_project.run {
             setOnRefreshListener {
-                mPresenter?.getProjectData(0, cid)
+                pageNo = 1
+                mPresenter?.getProjectData(pageNo, cid)
             }
         }
     }
@@ -94,5 +96,9 @@ class ProjectChildFragment : MySupportFragment<ProjectChildPresenter>(), Project
             layoutManager = LinearLayoutManager(_mActivity)
             adapter = projectAdapter
         }
+        projectAdapter.setOnLoadMoreListener({
+            pageNo++
+            mPresenter?.getProjectData(pageNo, cid)
+        }, rv_project)
     }
 }

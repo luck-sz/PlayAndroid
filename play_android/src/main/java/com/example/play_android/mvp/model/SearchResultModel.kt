@@ -1,6 +1,7 @@
 package com.example.play_android.mvp.model
 
 import android.app.Application
+import com.example.play_android.app.api.entity.ApiPagerResponse
 import com.example.play_android.app.api.entity.ArticleResponse
 import com.example.play_android.app.api.service.ApiService
 import com.google.gson.Gson
@@ -39,10 +40,10 @@ constructor(repositoryManager: IRepositoryManager) : BaseModel(repositoryManager
     override fun getResult(
         pageNo: Int,
         searchKey: String
-    ): Observable<MutableList<ArticleResponse>> {
+    ): Observable<ApiPagerResponse<MutableList<ArticleResponse>>> {
         return mRepositoryManager.obtainRetrofitService(ApiService::class.java)
             .getSearchDataByKey(pageNo, searchKey)
-            .map { it.data.datas }
+            .map { it.data }
     }
 
     override fun onDestroy() {

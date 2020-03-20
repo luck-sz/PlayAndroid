@@ -57,6 +57,7 @@ class SearchResultActivity : MySupportActivity<SearchResultPresenter>(), SearchR
     }
 
     lateinit var searchKey: String//搜索关键词
+    private var pageNo: Int = 0
 
     override fun initView(savedInstanceState: Bundle?): Int {
         return R.layout.activity_search_result //如果你不需要框架帮你设置 setContentView(id) 需要自行设置,请返回 0
@@ -74,10 +75,11 @@ class SearchResultActivity : MySupportActivity<SearchResultPresenter>(), SearchR
         }
         refresh_layout_result.run {
             setOnRefreshListener {
-                mPresenter?.getResult(0, searchKey)
+                pageNo = 0
+                mPresenter?.getResult(pageNo, searchKey)
             }
         }
-        mPresenter?.getResult(0, searchKey)
+        mPresenter?.getResult(pageNo, searchKey)
     }
 
     override fun showLoading() {
@@ -105,5 +107,9 @@ class SearchResultActivity : MySupportActivity<SearchResultPresenter>(), SearchR
             layoutManager = LinearLayoutManager(this@SearchResultActivity)
             adapter = homeAdapter
         }
+        homeAdapter.setOnLoadMoreListener({
+            pageNo++
+            mPresenter?.getResult(pageNo, searchKey)
+        }, rv_search_result)
     }
 }

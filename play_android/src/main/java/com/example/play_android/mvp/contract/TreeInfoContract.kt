@@ -1,5 +1,6 @@
 package com.example.play_android.mvp.contract
 
+import com.example.play_android.app.api.entity.ApiPagerResponse
 import com.example.play_android.app.api.entity.ArticleResponse
 import com.example.play_android.app.api.entity.ClassifyResponse
 import com.example.play_android.mvp.ui.adapter.HomeAdapter
@@ -33,7 +34,7 @@ interface TreeInfoContract {
     //Model层定义接口,外部只需关心Model返回的数据,无需关心内部细节,即是否使用缓存
     interface Model : IModel {
         // 获取体系下文章数据
-        fun getSystemPage(pageNo: Int, cid: Int): Observable<MutableList<ArticleResponse>>
+        fun getSystemPage(pageNo: Int, cid: Int): Observable<ApiPagerResponse<MutableList<ArticleResponse>>>
     }
 
 }
