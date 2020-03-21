@@ -23,6 +23,8 @@ import com.example.play_android.mvp.presenter.SquarePresenter
 import com.example.play_android.R
 import com.example.play_android.app.base.MySupportFragment
 import com.example.play_android.app.event.OpenDrawer
+import com.example.play_android.mvp.ui.activity.WebViewActivity
+import com.example.play_android.mvp.ui.activity.showToast
 import com.example.play_android.mvp.ui.adapter.HomeAdapter
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.refresh_layout
@@ -126,9 +128,19 @@ class SquareFragment : MySupportFragment<SquarePresenter>(), SquareContract.View
                 }
             })
         }
-        homeAdapter.setOnLoadMoreListener({
-            pageNo ++
-            mPresenter?.initAdapter(pageNo)
-        }, rv_square)
+        homeAdapter.run {
+            setOnLoadMoreListener({
+                pageNo++
+                mPresenter?.initAdapter(pageNo)
+            }, rv_square)
+            setOnItemClickListener { _, _, position ->
+                val intent = Intent(_mActivity, WebViewActivity::class.java)
+                val bundle = Bundle().also {
+                    it.putSerializable("data", data[position])
+                }
+                intent.putExtras(bundle)
+                launchActivity(intent)
+            }
+        }
     }
 }

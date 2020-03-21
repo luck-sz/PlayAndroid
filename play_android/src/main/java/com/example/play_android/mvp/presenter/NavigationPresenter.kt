@@ -63,9 +63,9 @@ constructor(model: NavigationContract.Model, rootView: NavigationContract.View) 
                 override fun onNext(data: MutableList<NavigationResponse>) {
                     if (adapter == null) {
                         adapter = NavigationAdapter(R.layout.item_system, data)
+                        mRootView.setContent(adapter!!)
                     }
                     adapter!!.setNewData(data)
-                    mRootView.setContent(adapter!!)
                 }
             })
     }

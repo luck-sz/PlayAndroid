@@ -1,16 +1,20 @@
 package com.example.play_android.mvp.ui.adapter
 
 import android.text.Html
+import android.view.View
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.example.play_android.R
 import com.example.play_android.app.api.entity.ArticleResponse
+import com.example.play_android.mvp.ui.activity.showToast
 import com.example.play_android.mvp.ui.view.CollectView
+import timber.log.Timber
 
 class HomeAdapter(layoutResId: Int, data: MutableList<ArticleResponse>) :
     BaseQuickAdapter<ArticleResponse, BaseViewHolder>(layoutResId, data) {
 
     override fun convert(helper: BaseViewHolder, articleResponse: ArticleResponse) {
+
         articleResponse.run {
             helper.setText(R.id.item_home_author, if (author.isNotEmpty()) author else shareUser)
             helper.setText(R.id.item_home_title, Html.fromHtml(title))

@@ -107,9 +107,19 @@ class SearchResultActivity : MySupportActivity<SearchResultPresenter>(), SearchR
             layoutManager = LinearLayoutManager(this@SearchResultActivity)
             adapter = homeAdapter
         }
-        homeAdapter.setOnLoadMoreListener({
-            pageNo++
-            mPresenter?.getResult(pageNo, searchKey)
-        }, rv_search_result)
+        homeAdapter.run {
+            setOnLoadMoreListener({
+                pageNo++
+                mPresenter?.getResult(pageNo, searchKey)
+            }, rv_search_result)
+            setOnItemClickListener { _, _, position ->
+                val intent = Intent(this@SearchResultActivity, WebViewActivity::class.java)
+                val bundle = Bundle().also {
+                    it.putSerializable("data", data[position])
+                }
+                intent.putExtras(bundle)
+                launchActivity(intent)
+            }
+        }
     }
 }

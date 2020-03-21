@@ -20,6 +20,8 @@ import com.example.play_android.mvp.presenter.ProjectChildPresenter
 
 import com.example.play_android.R
 import com.example.play_android.app.base.MySupportFragment
+import com.example.play_android.mvp.ui.activity.WebViewActivity
+import com.example.play_android.mvp.ui.activity.showToast
 import com.example.play_android.mvp.ui.adapter.HomeAdapter
 import com.example.play_android.mvp.ui.adapter.ProjectAdapter
 import kotlinx.android.synthetic.main.fragment_project_child.*
@@ -96,9 +98,20 @@ class ProjectChildFragment : MySupportFragment<ProjectChildPresenter>(), Project
             layoutManager = LinearLayoutManager(_mActivity)
             adapter = projectAdapter
         }
-        projectAdapter.setOnLoadMoreListener({
-            pageNo++
-            mPresenter?.getProjectData(pageNo, cid)
-        }, rv_project)
+
+        projectAdapter.run {
+            setOnLoadMoreListener({
+                pageNo++
+                mPresenter?.getProjectData(pageNo, cid)
+            }, rv_project)
+            setOnItemClickListener { _, _, position ->
+                val intent = Intent(_mActivity, WebViewActivity::class.java)
+                val bundle = Bundle().also {
+                    it.putSerializable("data", data[position])
+                }
+                intent.putExtras(bundle)
+                launchActivity(intent)
+            }
+        }
     }
 }

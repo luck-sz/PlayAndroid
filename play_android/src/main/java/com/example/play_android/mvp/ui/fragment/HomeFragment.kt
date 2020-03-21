@@ -22,6 +22,8 @@ import com.example.play_android.app.api.entity.BannerResponse
 import com.example.play_android.app.base.MySupportFragment
 import com.example.play_android.app.event.OpenDrawer
 import com.example.play_android.mvp.ui.activity.SearchActivity
+import com.example.play_android.mvp.ui.activity.WebViewActivity
+import com.example.play_android.mvp.ui.activity.showToast
 import com.example.play_android.mvp.ui.adapter.HomeAdapter
 import com.example.play_android.mvp.ui.view.BannerViewHolder
 import com.zhouwei.mzbanner.MZBannerView
@@ -30,6 +32,8 @@ import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.include_float_btn.*
 import kotlinx.android.synthetic.main.include_title.*
 import org.simple.eventbus.EventBus
+import timber.log.Timber
+import java.io.Serializable
 
 class HomeFragment : MySupportFragment<HomePresenter>(), HomeContract.View {
 
@@ -107,9 +111,18 @@ class HomeFragment : MySupportFragment<HomePresenter>(), HomeContract.View {
             setIndicatorVisible(true)
             setDelayedTime(3000)
             duration = 1500
+            setBannerPageClickListener { _, idx ->
+                val intent = Intent(_mActivity, WebViewActivity::class.java)
+                val bundle = Bundle().also {
+                    it.putSerializable("banner", banner[idx])
+                }
+                intent.putExtras(bundle)
+                launchActivity(intent)
+            }
             setPages(banner, MZHolderCreator {
                 BannerViewHolder()
             })
+
         }
         mMyBanner.start()
     }
@@ -134,10 +147,20 @@ class HomeFragment : MySupportFragment<HomePresenter>(), HomeContract.View {
                 }
             })
         }
-        homeAdapter.setOnLoadMoreListener({
-            pageNo++
-            mPresenter?.getHomePage(pageNo)
-        }, rv_home)
+        homeAdapter.run {
+            setOnLoadMoreListener({
+                pageNo++
+                mPresenter?.getHomePage(pageNo)
+            }, rv_home)
+            setOnItemClickListener { _, _, position ->
+                val intent = Intent(_mActivity, WebViewActivity::class.java)
+                val bundle = Bundle().also {
+                    it.putSerializable("data", data[position])
+                }
+                intent.putExtras(bundle)
+                launchActivity(intent)
+            }
+        }
     }
 
     private fun initView() {

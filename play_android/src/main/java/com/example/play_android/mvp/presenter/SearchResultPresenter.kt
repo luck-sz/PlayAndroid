@@ -80,9 +80,6 @@ constructor(model: SearchResultContract.Model, rootView: SearchResultContract.Vi
                                 loadMoreComplete()
                             }
                         }
-                        setOnItemClickListener { _, _, position ->
-                            mApplication.showToast(data.datas[position].title)
-                        }
                     }
                 }
             })

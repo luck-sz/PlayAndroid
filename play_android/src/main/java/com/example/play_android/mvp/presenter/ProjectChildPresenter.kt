@@ -83,9 +83,6 @@ constructor(model: ProjectChildContract.Model, rootView: ProjectChildContract.Vi
                                 loadMoreComplete()
                             }
                         }
-                        setOnItemClickListener { _, _, position ->
-                            mApplication.showToast(data.datas[position].title)
-                        }
                     }
                 }
             })

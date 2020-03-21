@@ -18,6 +18,7 @@
             android:layout_height="?attr/actionBarSize"
             app:navigationIcon="@drawable/ic_menu_24dp"
             app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:title="玩安卓"
             app:titleTextAppearance="@style/Toolbar.TitleText" />
 
     </android.support.design.widget.AppBarLayout>

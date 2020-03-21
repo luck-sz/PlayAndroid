@@ -1,5 +1,7 @@
 package com.example.play_android.mvp.ui.adapter
 
+import android.content.Intent
+import android.os.Bundle
 import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +13,7 @@ import com.example.play_android.app.api.entity.ClassifyResponse
 import com.example.play_android.app.api.entity.NavigationResponse
 import com.example.play_android.app.api.entity.SystemResponse
 import com.example.play_android.mvp.ui.activity.MainActivity
+import com.example.play_android.mvp.ui.activity.WebViewActivity
 import com.example.play_android.mvp.ui.activity.randomColor
 import com.example.play_android.mvp.ui.activity.showToast
 import com.zhy.view.flowlayout.FlowLayout
@@ -39,8 +42,12 @@ class NavigationAdapter(layoutResId: Int, data: MutableList<NavigationResponse>)
                             }
                     }
                 }
-                setOnTagClickListener { view, position, parent ->
-                    mContext.showToast(it.articles[position].title)
+                setOnTagClickListener { _, position, _ ->
+                    val intent = Intent(mContext, WebViewActivity::class.java)
+                    val bundle = Bundle()
+                    bundle.putSerializable("data", it.articles[position])
+                    intent.putExtras(bundle)
+                    mContext.startActivity(intent)
                     false
                 }
             }

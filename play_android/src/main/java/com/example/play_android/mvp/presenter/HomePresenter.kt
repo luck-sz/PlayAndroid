@@ -98,9 +98,6 @@ constructor(model: HomeContract.Model, rootView: HomeContract.View) :
                             addData(data)
                             loadMoreComplete()
                         }
-                        setOnItemClickListener { _, _, position ->
-                            mApplication.showToast(data[position].title)
-                        }
                     }
                 }
             })

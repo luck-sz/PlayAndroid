@@ -81,9 +81,6 @@ constructor(model: SquareContract.Model, rootView: SquareContract.View) :
                                 loadMoreComplete()
                             }
                         }
-                        setOnItemClickListener { _, _, position ->
-                            mApplication.showToast(data.datas[position].title)
-                        }
                     }
                 }
             })

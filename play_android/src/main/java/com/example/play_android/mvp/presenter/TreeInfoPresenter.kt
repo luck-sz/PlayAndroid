@@ -87,9 +87,6 @@ constructor(model: TreeInfoContract.Model, rootView: TreeInfoContract.View) :
                                 loadMoreComplete()
                             }
                         }
-                        setOnItemClickListener { _, _, position ->
-                            mApplication.showToast(data.datas[position].title)
-                        }
                     }
                 }
             })

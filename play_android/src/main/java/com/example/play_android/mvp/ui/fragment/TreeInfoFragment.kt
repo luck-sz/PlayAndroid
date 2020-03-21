@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.chad.library.adapter.base.BaseQuickAdapter
 
 import com.jess.arms.base.BaseFragment
 import com.jess.arms.di.component.AppComponent
@@ -21,6 +22,8 @@ import com.example.play_android.mvp.presenter.TreeInfoPresenter
 import com.example.play_android.R
 import com.example.play_android.app.api.entity.ClassifyResponse
 import com.example.play_android.app.base.MySupportFragment
+import com.example.play_android.mvp.ui.activity.WebViewActivity
+import com.example.play_android.mvp.ui.activity.showToast
 import com.example.play_android.mvp.ui.adapter.HomeAdapter
 import kotlinx.android.synthetic.main.fragment_tree_info.*
 
@@ -99,9 +102,19 @@ class TreeInfoFragment : MySupportFragment<TreeInfoPresenter>(), TreeInfoContrac
             layoutManager = LinearLayoutManager(_mActivity)
             adapter = homeAdapter
         }
-        homeAdapter.setOnLoadMoreListener({
-            pageNo++
-            mPresenter?.setContent(pageNo, cid)
-        }, rv_tree_info)
+        homeAdapter.run {
+            setOnItemClickListener { _, _, position ->
+                val intent = Intent(_mActivity, WebViewActivity::class.java)
+                val bundle = Bundle().also {
+                    it.putSerializable("data", data[position])
+                }
+                intent.putExtras(bundle)
+                launchActivity(intent)
+            }
+            setOnLoadMoreListener({
+                pageNo++
+                mPresenter?.setContent(pageNo, cid)
+            }, rv_tree_info)
+        }
     }
 }
