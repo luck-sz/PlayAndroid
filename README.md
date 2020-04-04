@@ -1,19 +1,57 @@
-# PlayAndroid
-所用的技术点：
-Mvp Google's official Mvp architecture project, which contains several different schema branches (this is the Dagger branch).
-Dagger2
-RxJava
-RxAndroid
-Rxlifecycle
-RxCache
-RxPermissions
-RxErroHandler
-Retrofit
-Okhttp
-Autolayout
-Gson
-Butterknife
-Androideventbus
-Timber
-Glide
-LeakCanary
+# 联系方式
+
+- 手机：13457603024
+- QQ/微信号：1037055363
+- Email：1037055363@qq.com
+- Github：https://github.com/qindewen
+
+------
+
+# 个人信息
+
+- 覃德文/男/1997
+- 专科/南宁职业技术学院/软件技术
+- 工作年限：1年以上
+- 期望职位：Android程序员，Flutter开发
+
+------
+
+# 工作经历
+
+## 广州绿创信息科技有限公司 （ 2019年8月 ~ 2020年2月 ）
+
+### 智能回收箱App
+
+​		智能回收箱App是一款资源回收智能终端App。用户通过自主投放废旧物品以赚取积分兑换各种物品，很好地提升了对废旧物品的二次使用。我负责整个App客户端的开发。
+
+## 广西龙讯互动信息技术股份有限公司 （ 2018年12月 ~ 2019年7月 ）
+
+### 青秀云媒App
+
+​		青秀云媒App是广西南宁青秀区的一款移动新闻客户端。主要实现了新闻、政务、民生、视听等功能。我负责对App的日常维护、版本更新，以及根据客户的需求进行二次开发。
+
+### 掌中玉林App
+
+​		掌中玉林App是玉林日报社官方的移动新闻客户端，融报纸在线浏览、新闻阅读、资讯推送、网民爆料、网上服务等功能。我负责对App的日常维护、版本更新，以及根据客户的需求进行二次开发。
+
+------
+
+# 开源项目和作品
+
+### 百姓生活+App
+
+​		这是我自主学习了Flutter后做的一个移动电商App项目。主要实现首页、列表页、详情页、购物车和会员中心的开发。我负责对整个App客户端的开发。
+
+### 掌上宝贝App
+
+​		这是我的毕业设计项目作品，是一个提供给幼儿园老师与家长交流的app平台。基于原生安卓开发，主要实现了首页、成长页、通知页、我的页面的开发。我负责对整个App客户端的设计以及编写。
+
+# 技能清单
+
+以下均为我熟练掌握的技能
+
+- 移动开发：Java/Android/Kotlin/Flutter
+- 开发工具：Android Studio/Visual Studio Code
+- 数据库相关：Sqlite/Litepal
+- 版本管理工具：Git
+- 其他：Glide/Okhttp/Retrofit/EventBus/RxJava
