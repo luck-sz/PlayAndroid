@@ -1,6 +1,5 @@
 ## PlayAndroid
 
-- 手机：13457603024
-- QQ/微信号：1037055363
-- Email：1037055363@qq.com
-- Github：https://github.com/qindewen
+### 项目中用到的技术点
+1. Email：1037055363@qq.com
+2. Github：https://github.com/qindewen
