@@ -1,9 +1,9 @@
 ## PlayAndroid
 
 #### 用到的技术点
-1.MvpArms.
-2.Dagger2
-3.RxJava
+- MvpArms.
+- Dagger2
+- RxJava
 4.RxAndroid
 5.Rxlifecycle
 6.RxCache
