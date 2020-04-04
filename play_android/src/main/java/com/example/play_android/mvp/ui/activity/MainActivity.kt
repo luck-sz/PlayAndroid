@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.view.*
 import android.widget.TextView
 import android.widget.Toast
+import com.afollestad.materialdialogs.MaterialDialog
 
 import com.jess.arms.di.component.AppComponent
 import com.jess.arms.utils.ArmsUtils
@@ -118,9 +119,24 @@ class MainActivity : MySupportActivity<MainPresenter>(), MainContract.View {
                     R.id.nav_logout -> {
                         if (CacheUtil.isLogin()) {
                             CacheUtil.setIsLogin(false)
-                            nav_username?.text = "去登陆"
-                            nav_view.menu.findItem(R.id.nav_logout).isVisible = false
+                            MaterialDialog(this@MainActivity).show {
+                                title(text = "温馨提示")
+                                message(text = "确定要退出登陆吗？")
+                                positiveButton(text = "确定") {
+                                    nav_username?.text = "去登陆"
+                                    this@MainActivity.nav_view.menu.findItem(R.id.nav_logout)
+                                        .isVisible = false
+                                    showToast("退出成功...")
+                                }
+                                negativeButton(R.string.cancel)
+                            }
                         }
+                    }
+                    R.id.nav_night_mode -> {
+                        showToast("夜间模式...")
+                    }
+                    R.id.nav_setting -> {
+                        launchActivity(Intent(this@MainActivity, SettingActivity::class.java))
                     }
                 }
                 false
