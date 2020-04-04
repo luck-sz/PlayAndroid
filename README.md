@@ -1,5 +1,7 @@
 ## PlayAndroid
 
+#### 项目截图
+
 #### 用到的技术点
 - MvpArms.
 - Dagger2
