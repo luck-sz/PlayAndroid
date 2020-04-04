@@ -4,15 +4,15 @@
 - MvpArms.
 - Dagger2
 - RxJava
-4.RxAndroid
-5.Rxlifecycle
-6.RxCache
-7.RxErroHandler
-8.Retrofit
-9.Okhttp
-10.AutoSize
-11.Gson
-12.Androideventbus
-13.Timber
-14.Glide
-15.LeakCanary
+- RxAndroid
+- Rxlifecycle
+- RxCache
+- RxErroHandler
+- Retrofit
+- Okhttp
+- AutoSize
+- Gson
+- Androideventbus
+- Timber
+- Glide
+- LeakCanary
