@@ -2,7 +2,7 @@
 
 #### 项目截图
 
-![Alt text](https://github.com/qindewen/PlayAndroid/blob/master/img/1.jpg)
+<img src="https://github.com/qindewen/PlayAndroid/blob/master/img/1.jpg" width="375" alt="测试">
 
 #### 下载体验
 
