@@ -2,6 +2,8 @@
 
 #### 项目截图
 
+![Alt text](https://github.com/qindewen/PlayAndroid/blob/master/img/1.jpg)
+
 #### 下载体验
 
 #### 用到的技术点
