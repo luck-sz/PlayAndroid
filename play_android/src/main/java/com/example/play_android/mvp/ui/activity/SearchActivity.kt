@@ -3,7 +3,7 @@ package com.example.play_android.mvp.ui.activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.SearchView
+import android.widget.SearchView
 import android.text.Html
 import android.view.LayoutInflater
 import android.view.Menu
@@ -115,7 +115,7 @@ class SearchActivity : MySupportActivity<SearchPresenter>(), SearchContract.View
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_activity_search, menu)
-        val searchView = menu?.findItem(R.id.action_search)?.actionView as SearchView
+        val searchView = menu?.findItem(R.id.action_for_search)?.actionView as SearchView
         searchView.run {
             maxWidth = Integer.MAX_VALUE
             onActionViewExpanded()
