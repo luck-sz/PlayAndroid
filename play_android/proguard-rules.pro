@@ -19,3 +19,9 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+-dontwarn org.conscrypt.OpenSSLProvider
+-dontwarn org.conscrypt.Conscrypt
+-dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
+-keep class com.jess.arms.** { *; }
+-keep class com.example.play_android.** { *; }
